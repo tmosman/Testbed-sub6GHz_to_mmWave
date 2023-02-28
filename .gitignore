@@ -1,0 +1,6 @@
+
+capture/*.mat
+*.pyc
+*.cpython-38.pyc
+eder_files_py3.8/__pycache__/
+evk.info
