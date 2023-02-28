@@ -196,7 +196,7 @@ def publisher_zmq(local_ip,num_conns,num_capture,no_samples,robot_status):
         #recv_data[i] = np.vstack((IQ[0],IQ[1]))
         
         #estObj.Rx_processing(recv_data[i])
-        sc.savemat(f'sub6_iq_{i}.mat',{'data':recv_data[i]})
+        sc.savemat(f'./capture/sub6_iq_{i}.mat',{'data':recv_data[i]})
         
        
     print("Data Captution Done !!!")
