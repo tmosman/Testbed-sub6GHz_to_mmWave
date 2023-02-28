@@ -4,9 +4,12 @@ Created on Wed Feb  1 21:13:14 2023
 
 @author: osman
 """
+import sys
+sys.path.insert(1, './scripts')
 from  multiprocessing import Process,Queue
 from configparser import ConfigParser
-from main_functions import publisher_zmq,subscriber_zmq
+from my_functions import publisher_zmq,subscriber_zmq
+
 
 import logging
 import time

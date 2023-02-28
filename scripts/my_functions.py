@@ -5,7 +5,7 @@ Created on Sat Feb  4 17:05:44 2023
 @author: osman
 """
 
-from main_classes import usrpUHD,createZMQ,Robot_Interface,Array
+from my_classes import usrpUHD,createZMQ,Robot_Interface,Array
 import time
 from datetime import datetime
 import numpy as np
