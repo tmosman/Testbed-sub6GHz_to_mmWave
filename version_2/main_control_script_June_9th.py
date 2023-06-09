@@ -1,0 +1,75 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Feb  1 21:13:14 2023
+Updated on June 9, 2023
+@author: Tawfik Osman
+
+"""
+from  multiprocessing import Process,Queue
+from configparser import ConfigParser
+from main_functions_June_9th import publisher_zmq,subscriber_zmq
+import os
+import logging
+import time
+import matplotlib.pyplot as plt
+
+
+if __name__ == "__main__":
+    ## global logging
+    logging.basicConfig(filename='./config/logFile.log', filemode='w', level=logging.DEBUG)
+    config = ConfigParser()
+    
+    ## load config file
+    selectAPI = 1  ## 1 --> gnuradio, else: uhd
+    if selectAPI:
+        config.read('./config/gnuradio_config.ini')   
+    else:
+        config.read('./config/uhd_config.ini')
+    
+    capture_config = config['capture']
+    num_conns =  int(capture_config['num_conns'])
+    
+    ## create directory for IQ logging
+    save_dir = capture_config['save_dir']
+    if not os.path.exists(save_dir):
+        os.mkdir(save_dir)
+     
+    ## create figure for the results displayed
+    fig = plt.figure(figsize=(8,7))
+    fig.subplots_adjust(top=0.85)
+    fig.tight_layout(pad=3.5)
+    subplot_list = []
+    initial = 220
+    for fig_idx in range(1,5):
+        subplot_list.append(initial+fig_idx)
+                              
+    
+    ## Start Processes !!!
+    message = input(" -> ")  # take input
+    processes = []
+    queue = Queue()
+    while message.lower().strip() != 'bye':        
+        ## Start Publisher Process
+        p_pub = Process(name='Publisher',target=publisher_zmq, args=(capture_config,subplot_list,))
+        p_pub.start() 
+        time.sleep(1)
+        print('Publisher Script Started !!')
+        
+        ##
+        for i in range(num_conns):
+            usrp_configData = config[f'Device{i}']
+            p = Process(name=f'Subscriber{i}',target=subscriber_zmq, args=(usrp_configData,capture_config,queue,))
+            p.start()
+            print(queue.get())
+            processes.append(p)
+            print('Subcriber !!!')
+        
+        
+        
+        for p in processes:
+            print(queue.get())
+            p.join()
+        p_pub.join()
+        print('Processes Closed !!')
+        message = input(" -> ")  # take input
+    

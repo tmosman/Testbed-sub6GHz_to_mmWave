@@ -1,0 +1,17 @@
+{
+    "00_manufacturer": "SIVERS WIRELESS",
+    "01_product_id": "BFM06005",
+    "02_orig_rev_id": "R1.0",
+    "03_serial_no": "NN000000000",
+    "04_temp_tlv": 0,
+    "05_temp_data": 0,
+    "07_alc_tlv": 0,
+    "08_alc_ver": 0,
+    "09_alc_data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "11_reserved_1": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "12_cur_rev_id": "",
+    "13_reserved_2": 0,
+    "14_reserved_3": 0,
+    "15_reserved_4": 0,
+    "16_reserved_5": 0
+}
