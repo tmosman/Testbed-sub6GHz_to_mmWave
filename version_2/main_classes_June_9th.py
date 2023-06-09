@@ -77,11 +77,17 @@ class Estimator:
             AGC = np.matlib.repmat(sts_t, 1, 30);
             preamble = np.concatenate((AGC[0,:],lts_t[0,32:],lts_t[0,:],lts_t[0,:]),axis=0);
         return lts_t,preamble
-    def modulate(self,ModOrder):
-        
-        return 1
-    
+
     def detectPeaks(self,data):
+        """
+        Time synchronization; Detect LTS peaks
+        Input:
+            data - time domain received IQ samples
+        Output:
+            lts_corr - autocorrelation output
+            numberofPackets - Number of detected packets in the raw samples
+            valid_peak_indices - Indices of the detected packets
+        """
         flip_lts = np.fliplr(self.lts_time)
         lts_corr = abs(np.convolve(np.conj(flip_lts[0,:]),data[0,:], mode='full'))
         lts_peaks = np.argwhere(lts_corr > self.LTS_CORR_THRESH*np.max(lts_corr));
@@ -103,19 +109,34 @@ class Estimator:
         else:
             payload_ind,lts_ind = 0,0
             print('No Packet Detected !!!')
-        ''''''
+        numberofPackets = len(valid_peak_indices)
        
-        return lts_corr,len(valid_peak_indices),valid_peak_indices
+        return lts_corr,numberofPackets,valid_peak_indices
     
     def decimate2x(self,data):
+        """
+        Down sample the received IQ samples by a factor of 2
+        
+        """
         # Read the captured IQ sample file, filter
-        h = sc.loadmat('./files_req/filter_array.mat')['interp_filt2']
-        print(h.shape)
+        filter_coeff = sc.loadmat('./files_req/filter_array.mat')['interp_filt2']
+        
        # data_conv = np.convolve(data_recv[0,:],h[0,:],'full').reshape(1,-1)
-        filter_data = sig.upfirdn(h[0,:],data[0,:],down=2).reshape(1,-1)
+        filter_data = sig.upfirdn(filter_coeff[0,:],data[0,:],down=2).reshape(1,-1)
+        
         return filter_data
-    def cfoEstimate(self,dataSamples, lts_index,do_cfo):
-        print(dataSamples.shape)
+    
+    def cfoEstimate(self,dataSamples, lts_index, do_cfo):
+        """
+        Estimate and correct CFO
+        Input:
+            dataSamples - time domain received signal before CFo correction
+            lts_index - starting index of the lts samples
+            do_cfo - Boolean argument True/False
+            
+        Output:
+            cfo_samples_t - data samples after cfo correction;
+        """
         ## CFO Correction
         if do_cfo == True:
             rx_lts = dataSamples[0,lts_index : lts_index+160] #Extract LTS (not yet CFO corrected)
@@ -131,9 +152,21 @@ class Estimator:
         # Apply CFO correction to raw Rx waveform
         time_vec = np.arange(0,np.shape(dataSamples)[1],1);
         rx_cfo_corr_t = np.exp(-1j*2*np.pi*rx_cfo_est_lts*time_vec);
-        return dataSamples  * rx_cfo_corr_t,rx_cfo_est_lts
+        cfo_samples_t  = dataSamples  * rx_cfo_corr_t,rx_cfo_est_lts
+        
+        return cfo_samples_t
     
     def complexChannelGain(self,dataSamples,lts_index):
+        """
+        compute channel estimates from LTS sequences
+        Input:
+            dataSamples - time domain received signal after CFo correction
+            lts_index - starting index of the lts samples
+            
+        Output:
+            rx_H_est - vector of complex channel gains
+        """
+        
         rx_lts = dataSamples[0,lts_index : lts_index+160];
         rx_lts1 = rx_lts[-64+-self.FFT_OFFSET + 96:-64+-self.FFT_OFFSET +160];  # Check indexing
         rx_lts2 = rx_lts[-self.FFT_OFFSET+96:-self.FFT_OFFSET+160];
@@ -144,6 +177,15 @@ class Estimator:
         return rx_H_est
     
     def equalizeSymbols(self,samples,payload_index,channelEstimates):
+        """
+        Equalizing the frequency domain received signal with channel estimates
+        Input:
+            samples - time domain received signal after CFo correction
+            payload_index - starting index of the payload samples
+            channelEstimates - vector of complex channel gains
+        Output:
+            rx_syms - Equalized, frequency domain received data symbols
+        """
         rx_dec_cfo_corr = samples[0,:]
         payload_vec = rx_dec_cfo_corr[payload_index+1: payload_index+self.N_OFDM_SYMS*(self.N_SC+self.CP_LEN)+1]; # Extract received OFDM Symbols
         payload_mat = np.matlib.reshape(payload_vec, (self.N_OFDM_SYMS,(self.N_SC+self.CP_LEN) )).transpose(); # Reshape symbols
@@ -157,9 +199,19 @@ class Estimator:
                 
         # Equalize (zero-forcing, just divide by complex chan estimates)
         rep_rx_H = np.transpose(np.matlib.repmat(channelEstimates, self.N_OFDM_SYMS,1))
-        return  syms_f_mat / (rep_rx_H);
+        rx_syms = syms_f_mat / (rep_rx_H)
+        return rx_syms
+    
     
     def demodumlate(self,equalizedSymbols):
+        """
+        Demodulating QAM symbols
+        Input:
+            equalizedSymbols - Equalized, frequency domain received signal
+        Output:
+            rx_data -received binary data
+            rx_syms - Equalized, frequency domain received data symbols
+        """
         payload_syms_mat = equalizedSymbols[self.SC_IND_DATA, :];
         ## Demodulate
         rx_syms = payload_syms_mat.transpose().reshape(1,self.N_DATA_SYMS)
@@ -177,6 +229,7 @@ class Estimator:
             rx_data = np.array(list(map(demod_fcn_bpsk,rx_syms)))
         
         return rx_data,rx_syms
+    
     def sfo_correction(self, rxSig_freq_eq,ch_est):
         """
         Apply Sample Frequency Offset
@@ -248,60 +301,31 @@ class Estimator:
         if self.MOD_ORDER == 16:
             tx_data = sc.loadmat("./files_req/tx_data_usrp_mgs.mat")['tx_data']
             tx_syms =  sc.loadmat("./files_req/packet_syms_QAM_usrp_mgs.mat")['tx_syms']
-                    #print(tx_data)
-                    # tx_data = double(tx_data{1});
-            #sym_errs = np.sum(tx_syms != receivedSymbols);
-            bit_errs = np.sum((tx_data^receivedData) != 0)
-            rx_evm  = np.sqrt(np.sum((np.real(receivedSymbols) - np.real(tx_syms))**2 \
-                                     + (np.imag(receivedSymbols) - np.imag(tx_syms))**2)/(len(self.SC_IND_DATA) * self.N_OFDM_SYMS));
-        
-            print('\nResults:\n');
-            print(f'Num Bytes:  {self.N_DATA_SYMS * np.log2(self.MOD_ORDER) / 8 }\n' );
-            #print(f'Sym Errors:  {sym_errs} (of { self.N_DATA_SYMS} total symbols)\n');
-            print(f'Bit Errors:  {bit_errs} (of {self.N_DATA_SYMS * np.log2(self.MOD_ORDER)} total bits) {bit_errs/(self.N_DATA_SYMS * np.log2(self.MOD_ORDER))}\n')
-            print(f'The Receiver EVM is : {(rx_evm)*100}%')
         elif self.MOD_ORDER == 4:
             tx_data = sc.loadmat("./files_req/tx_data_usrp_mmWave_qpsk.mat")['tx_data'];
             tx_syms =  sc.loadmat("./files_req/packet_syms_QAM_usrp_mmWave_qpsk.mat")['tx_syms']
-                    #print(tx_data)
-                    # tx_data = double(tx_data{1});
-            #sym_errs = np.sum(tx_data != receivedData);
-            bit_errs = np.sum((tx_data^receivedData) != 0)
-            rx_evm  = np.sqrt(np.sum((np.real(receivedSymbols) - np.real(tx_syms))**2 \
-                                     + (np.imag(receivedSymbols) - np.imag(tx_syms))**2)/(len(self.SC_IND_DATA) * self.N_OFDM_SYMS));
-        
-            print('\nResults:\n');
-            print(f'Num Bytes:  {self.N_DATA_SYMS * np.log2(self.MOD_ORDER) / 8 }\n' );
-            #print(f'Sym Errors:  {sym_errs} (of { self.N_DATA_SYMS} total symbols)\n');
-            print(f'Bit Errors {self.MOD_ORDER}:  {bit_errs} (of {self.N_DATA_SYMS * np.log2(self.MOD_ORDER)} total bits) {bit_errs/(self.N_DATA_SYMS * np.log2(self.MOD_ORDER))}\n')
-            print(f'The Receiver EVM is : {(rx_evm)*100}%')
         elif self.MOD_ORDER == 2:
             tx_data = sc.loadmat("./files_req/tx_data_usrp_mmWave_bpsk.mat")['tx_data'];
             tx_syms =  sc.loadmat("./files_req/packet_syms_QAM_usrp_mmWave_bpsk.mat")['tx_syms']
-                    #print(tx_data)
-                    # tx_data = double(tx_data{1});
-            #sym_errs = np.sum(tx_syms != receivedSymbols);
-            bit_errs = np.sum((tx_data^receivedData) != 0)
-            rx_evm  = np.sqrt(np.sum((np.real(receivedSymbols) - np.real(tx_syms))**2 \
-                                     + (np.imag(receivedSymbols) - np.imag(tx_syms))**2)/(len(self.SC_IND_DATA) * self.N_OFDM_SYMS));
         
-            print('\nResults:\n');
-            print(f'Num Bytes:  {self.N_DATA_SYMS * np.log2(self.MOD_ORDER) / 8 }\n' );
-            #print(f'Sym Errors:  {sym_errs} (of { self.N_DATA_SYMS} total symbols)\n');
-            print(f'Bit Errors {self.MOD_ORDER}:  {bit_errs} (of {self.N_DATA_SYMS * np.log2(self.MOD_ORDER)} total bits) {bit_errs/(self.N_DATA_SYMS * np.log2(self.MOD_ORDER))}\n')
-            print(f'The Receiver EVM is : {(rx_evm)*100}%')
-
+        bit_errs = np.sum((tx_data^receivedData) != 0)
+        rx_evm  = np.sqrt(np.sum((np.real(receivedSymbols) - np.real(tx_syms))**2 \
+                                     + (np.imag(receivedSymbols) - np.imag(tx_syms))**2)/(len(self.SC_IND_DATA) * self.N_OFDM_SYMS));
+        print('\nResults:\n');
+        print(f'Num Bytes:  {self.N_DATA_SYMS * np.log2(self.MOD_ORDER) / 8 }\n' );
+        #print(f'Sym Errors:  {sym_errs} (of { self.N_DATA_SYMS} total symbols)\n');
+        print(f'Bit Errors:  {bit_errs} (of {self.N_DATA_SYMS * np.log2(self.MOD_ORDER)} total bits) {bit_errs/(self.N_DATA_SYMS * np.log2(self.MOD_ORDER))}\n')
+        print(f'The Receiver EVM is : {(rx_evm)*100}%')
         bit_errs = bit_errs/(self.N_DATA_SYMS * np.log2(self.MOD_ORDER))
         return bit_errs,tx_syms
+    
+    
     def Rx_processing_noPlot(self,rx_samples,ch_indx):
         output = self.decimate2x(rx_samples,ch_indx)
         autocorr,payload_ind,lts_ind = self.detectPeaks(output,2)
-        #plt.plot(autocorr)
-        #print(payload_ind,lts_ind)
         dataOutput = self.cfoEstimate(output, lts_ind,do_cfo=False)
         Hest = self.complexChannelGain(dataOutput,lts_ind)
         equalizeSymbols = self.equalizeSymbols(dataOutput, payload_ind, Hest)
-        
         receivedData,receivedSymbols = self.demodumlate(equalizeSymbols)
         sfo_syms,Hest_sfo = self.sfo_correction(equalizeSymbols,Hest)
         phase_error = self.phase_correction(equalizeSymbols)
@@ -311,8 +335,7 @@ class Estimator:
         receivedData,receivedSymbols = self.demodumlate(all_equalized_syms)
         tx_syms =  sc.loadmat("./files_req/packet_syms_QAM_usrp_mgs.mat")['tx_syms']
         ber=self.ber(receivedSymbols, receivedData)
-        #plt.plot(receivedSymbols.real,receivedSymbols.imag, 'bo')
-        #plt.pause(3)
+        
         return receivedSymbols,tx_syms,ber,Hest
 
     def Rx_processing(self,rx_samples,fig_list,rf_ch,count1,usrp_no):
@@ -329,39 +352,33 @@ class Estimator:
         ax1 = fig_list[1]
         ax2 = fig_list[2]
         ax3 = fig_list[3]
-
         
         if no_of_peak >= 2:
-            
-        
-            
             plt.title(f'RF chain :{rf_ch}')
-            #ph_0 = []
             #for select_peak in range(no_of_peak-1): 
-            for select_peak in range(10,11): 
-                #autocorr,payload_ind,lts_ind,no_of_peak = self.detectPeaks(output) 
-                #plt.plot(autocorr)
-                print('Packet at :',select_peak)
+            for select_peak in range(2,3): 
                 payload_ind = valid_peak_indices[select_peak]
                 lts_ind = payload_ind-160;
                 lts_ind = lts_ind+1
-
+                print(f'Decoding Packet {select_peak}, starting at index {payload_ind}')
+                
                 Hest = self.complexChannelGain(dataOutput,lts_ind)
                 #Hest = np.ones((1,64),np.complex64)
                 Hest0 = self.complexChannelGain(dataOutput,lts_indx)
+                
                 equalizeSymbols = self.equalizeSymbols(dataOutput, payload_ind, Hest0)
+                ## apply SFO to the data symbols and the estimated channel
                 sfo_syms,Hest_sfo = self.sfo_correction(equalizeSymbols,Hest)
                 phase_error = self.phase_correction(equalizeSymbols)
-                print(np.mean(sfo_syms,axis=1).shape,Hest.shape,phase_error.shape)
-                Hest = Hest_sfo* np.exp(-1j * np.mean(phase_error) )
-
-                all_equalized_syms = sfo_syms * np.exp(-1j * phase_error) 
+                
+                Hest = Hest_sfo* np.exp(-1j * np.mean(phase_error) ) # apply PE to the estimated channel
+                all_equalized_syms = sfo_syms * np.exp(-1j * phase_error)  # apply PE to the data symbols
                 receivedData,receivedSymbols = self.demodumlate(all_equalized_syms)
                 #receivedData,receivedSymbols = self.demodumlate(equalizeSymbols)
-                #receivedData,receivedSymbols = self.demodumlate(equalizeSymbols)
+                
                 ber,tx_syms = self.ber(receivedSymbols, receivedData)
                 
-                print('BER: ', ber)
+                print(f'BER kf data symbols: {ber} %', )
                
                 if usrp_no == 0:
                     rf_ch = rf_ch
@@ -381,37 +398,33 @@ class Estimator:
                 ax1.plot(np.abs(dataOutput[0][payload_ind:payload_ind+80]))
 
                # ax1.plot(np.unwrap(np.angle(Hest[0]))-np.unwrap(np.angle(Hest0[0])))
-                #ax1.plot(np.angle(Hest[0])-np.angle(Hest0[0]))
+                
+                ## Load the channel estimate vecotor of packet 1 in previous capture
                 if count1 != 0 and rf_ch%1 ==0 and usrp_no == 0:
-                    Hest00 = sc.loadmat(f'./June_7th/RF{rf_ch}/sub6_iq_{count1-1}.mat')['data']
+                    Hest_prev = sc.loadmat(f'./June_7th/RF{rf_ch}/sub6_iq_{count1-1}.mat')['data']
                 elif count1 != 0 and rf_ch%1 !=0 and usrp_no == 1:
-                    Hest00 = sc.loadmat(f'./June_7th/RF{rf_ch+2}/sub6_iq_{count1-1}.mat')['data']
+                    Hest_prev = sc.loadmat(f'./June_7th/RF{rf_ch+2}/sub6_iq_{count1-1}.mat')['data']
                 else:
-                    Hest00 = self.complexChannelGain(dataOutput,lts_indx)
+                    Hest_prev = self.complexChannelGain(dataOutput,lts_indx)
               
                 ax2.set_title(f'Absolute Phase Difference, RF :{rf_ch}')
-                ph_diff =np.angle(Hest0[0,1:])-np.angle(Hest00[0,1:])
-                print(ph_diff[27-1:39-1].shape,np.zeros((12,)).shape)
-                ph_diff[27-1:39-1] = np.zeros((12,))
+                ph_diff = np.angle(Hest0[0,1:])-np.angle(Hest_prev[0,1:])  # find the phase difference between current packet1 Hest and previous packet 1 Hest
+                #print(ph_diff[27-1:39-1].shape,np.zeros((12,)).shape)  
+                ph_diff[27-1:39-1] = np.zeros((12,))  # replace the complex gains of the guard bands with zeros.
                 ax2.plot(ph_diff)
-                
                 #ax1.axis([0, 64, -10, 10])
-                ax3.set_title(f'Absolue Channel Response, RF :{rf_ch}')
+                ax3.set_title(f'Constelllation of the Estimated channel(s) for RF-chain :{rf_ch}')
                 ax3.scatter(np.real(Hest[0]),np.imag(Hest[0]),s=2,)
                 
                 #ax1.set_xlabel('Sub-carriers')
                 #ax1.set_ylabel('Abs. Channel Response')
                 plt.pause(0.001)
                 #Hest0 = self.complexChannelGain(dataOutput,lts_indx)  
-                #plt.pause(0.1)
-                if select_peak == 0:
-                    plt.pause(1)
-                        #plt.show()
-                else:
-                    ber = 0.50
-                    Hest = np.zeros((1,64),np.complex64)
+            
             else:
+                print('No Packet is decoded !!!')
                 Hest = np.zeros((1,64),np.complex64)
+                ber = 0.50
             '''
             ax.clear()
             ax1.clear()
