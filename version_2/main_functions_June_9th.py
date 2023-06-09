@@ -306,3 +306,8 @@ def publisher_zmq(capture_config,subplot_list):
     publiser.close()
     responder.close()
     
+    
+    
+if __name__ == "__main__":
+    print(' run main script !!!')
+    

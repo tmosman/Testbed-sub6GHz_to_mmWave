@@ -293,7 +293,7 @@ class Estimator:
 
         bit_errs = bit_errs/(self.N_DATA_SYMS * np.log2(self.MOD_ORDER))
         return bit_errs,tx_syms
-    def Rx_processing_old(self,rx_samples,ch_indx):
+    def Rx_processing_noPlot(self,rx_samples,ch_indx):
         output = self.decimate2x(rx_samples,ch_indx)
         autocorr,payload_ind,lts_ind = self.detectPeaks(output,2)
         #plt.plot(autocorr)
@@ -314,148 +314,6 @@ class Estimator:
         #plt.plot(receivedSymbols.real,receivedSymbols.imag, 'bo')
         #plt.pause(3)
         return receivedSymbols,tx_syms,ber,Hest
-    def Rx_processing_x(self,rx_samples,fig_list,rf_ch,count1,usrp_no):
-        output = self.decimate2x(rx_samples)
-        #output = self.decimate2x(output)
-        autocorr,no_of_peak,valid_peak_indices = self.detectPeaks(output)
-
-        payload_indx = valid_peak_indices[0]
-        lts_indx = payload_indx-160;
-        lts_indx = lts_indx+1
-
-        dataOutput,lts_cfo = self.cfoEstimate(output, lts_indx,do_cfo = True)
-        ax = fig_list[0]
-        ax1 = fig_list[1]
-        ax2 = fig_list[2]
-        ax3 = fig_list[3]
-
-        
-        if no_of_peak >= 2:
-            
-        
-            
-            plt.title(f'RF chain :{rf_ch}')
-            #ph_0 = []
-            #for select_peak in range(no_of_peak-1): 
-            for select_peak in range(10,11): 
-                #autocorr,payload_ind,lts_ind,no_of_peak = self.detectPeaks(output) 
-                #plt.plot(autocorr)
-                print('Packet at :',select_peak)
-                payload_ind = valid_peak_indices[select_peak]
-                lts_ind = payload_ind-160;
-                lts_ind = lts_ind+1
-                
-               # plt.cla()
-                
-                
-                
-                #axes = [ax1,ax2,ax3,ax4]
-                color_plt =['blue','green','red','pink']
-                
-                
-                
-                
-                #sc.savemat(f'datout.mat',{'data':dataOutput})
-                Hest = self.complexChannelGain(dataOutput,lts_ind)
-                #Hest = np.ones((1,64),np.complex64)
-                Hest0 = self.complexChannelGain(dataOutput,lts_indx)
-                #if count1 != 0:
-                 #   Hest0 = sc.loadmat(f'./new_test/sub6_iq_{0}.mat')['data']
-                   # HestX = Hest0
-                    
-                                
-                #Hest = sc.loadmat(f"C:/Users/tmosman/Documents/Summer2023/Tested_scripts_3F/IQ_outputs/sub6_iq_6.mat")['data'][0]
-                #select_peak = np.argmax(lts_second_peak_index)-1
-                equalizeSymbols = self.equalizeSymbols(dataOutput, payload_ind, Hest0)
-               
-                
-                sfo_syms,Hest_sfo = self.sfo_correction(equalizeSymbols,Hest)
-                phase_error = self.phase_correction(equalizeSymbols)
-                print(np.mean(sfo_syms,axis=1).shape,Hest.shape,phase_error.shape)
-                Hest = Hest_sfo* np.exp(-1j * np.mean(phase_error) )
-            
-
-
-                all_equalized_syms = sfo_syms * np.exp(-1j * phase_error) 
-                receivedData,receivedSymbols = self.demodumlate(all_equalized_syms)
-                #receivedData,receivedSymbols = self.demodumlate(equalizeSymbols)
-                #receivedData,receivedSymbols = self.demodumlate(equalizeSymbols)
-                ber,tx_syms = self.ber(receivedSymbols, receivedData)
-                
-                print('BER: ', ber)
-                #if ber <=100:
-                #ph_0.append(Hest[0,10])
-                #ax.axis([-1.5, 1.5, -1.5, 1.5])
-                if usrp_no == 0:
-                    rf_ch = rf_ch
-                else:
-                    rf_ch = rf_ch+2
-
-                ax.set_title(f'Reveiver, BER => {ber:.4f}, RF :{rf_ch}')
-                #plt.title(f'Reveiver, BER => {ber:.4f}')
-                ax.scatter(receivedSymbols.real,receivedSymbols.imag, s=5,  marker='o')
-                ax.scatter(tx_syms.real,tx_syms.imag, s=20,  marker='o',c='r')
-                #ax.set_xlabel('Real Component')
-                #ax.set_ylabel('Imaginary Component')
-                pdp = 10.0 * np.log10(np.fft.ifft(Hest[0],64))
-                tap = np.argmax(pdp)
-                print('channel:', Hest.shape)
-                ax1.set_title(f'Power Delay Profile at tap {tap}, RF :{rf_ch}')
-                #ax1.plot(np.arange(0,64),pdp)
-                ax1.plot(np.abs(dataOutput[0][payload_ind:payload_ind+80]))
-
-               # ax1.plot(np.unwrap(np.angle(Hest[0]))-np.unwrap(np.angle(Hest0[0])))
-                #ax1.plot(np.angle(Hest[0])-np.angle(Hest0[0]))
-                if count1 != 0 and rf_ch%1 ==0 and usrp_no == 0:
-                    Hest00 = sc.loadmat(f'./June_7th/RF{rf_ch}/sub6_iq_{count1-1}.mat')['data']
-                elif count1 != 0 and rf_ch%1 !=0 and usrp_no == 1:
-                    Hest00 = sc.loadmat(f'./June_7th/RF{rf_ch+2}/sub6_iq_{count1-1}.mat')['data']
-                else:
-                    Hest00 = self.complexChannelGain(dataOutput,lts_indx)
-                
-                
-                '''
-                if count1 != 0 and rf_ch%1 ==0:
-                    Hest00 = sc.loadmat(f'./June_6th/RF{rf_ch}/sub6_iq_{count1-1}.mat')['data']
-                else:
-                    Hest00 = self.complexChannelGain(dataOutput,lts_indx)
-                '''
-                ax2.set_title(f'Absolute Phase Difference, RF :{rf_ch}')
-                ph_diff =np.angle(Hest0[0,1:])-np.angle(Hest00[0,1:])
-                print(ph_diff[27-1:39-1].shape,np.zeros((12,)).shape)
-                ph_diff[27-1:39-1] = np.zeros((12,))
-                ax2.plot(ph_diff)
-                
-                #ax1.axis([0, 64, -10, 10])
-                ax3.set_title(f'Absolue Channel Response, RF :{rf_ch}')
-                ax3.scatter(np.real(Hest[0]),np.imag(Hest[0]),s=2,)
-                
-                #ax1.set_xlabel('Sub-carriers')
-                #ax1.set_ylabel('Abs. Channel Response')
-                plt.pause(0.001)
-                #Hest0 = self.complexChannelGain(dataOutput,lts_indx)  
-                #plt.pause(0.1)
-                if select_peak == 0:
-                    plt.pause(1)
-                        #plt.show()
-                else:
-                    ber = 0.50
-                    Hest = np.zeros((1,64),np.complex64)
-            else:
-                Hest = np.zeros((1,64),np.complex64)
-            '''
-            ax.clear()
-            ax1.clear()
-            ax2.clear()
-            ax3.clear()
-                
-            plt.cla()
-            '''
-        #return Hest
-        return Hest,Hest0
-
-
-
 
     def Rx_processing(self,rx_samples,fig_list,rf_ch,count1,usrp_no):
         output = self.decimate2x(rx_samples)
@@ -487,37 +345,15 @@ class Estimator:
                 payload_ind = valid_peak_indices[select_peak]
                 lts_ind = payload_ind-160;
                 lts_ind = lts_ind+1
-                
-               # plt.cla()
-                
-                
-                
-                #axes = [ax1,ax2,ax3,ax4]
-                color_plt =['blue','green','red','pink']
-                
-                
-                
-                
-                #sc.savemat(f'datout.mat',{'data':dataOutput})
+
                 Hest = self.complexChannelGain(dataOutput,lts_ind)
                 #Hest = np.ones((1,64),np.complex64)
                 Hest0 = self.complexChannelGain(dataOutput,lts_indx)
-                #if count1 != 0:
-                 #   Hest0 = sc.loadmat(f'./new_test/sub6_iq_{0}.mat')['data']
-                   # HestX = Hest0
-                    
-                                
-                #Hest = sc.loadmat(f"C:/Users/tmosman/Documents/Summer2023/Tested_scripts_3F/IQ_outputs/sub6_iq_6.mat")['data'][0]
-                #select_peak = np.argmax(lts_second_peak_index)-1
                 equalizeSymbols = self.equalizeSymbols(dataOutput, payload_ind, Hest0)
-               
-                
                 sfo_syms,Hest_sfo = self.sfo_correction(equalizeSymbols,Hest)
                 phase_error = self.phase_correction(equalizeSymbols)
                 print(np.mean(sfo_syms,axis=1).shape,Hest.shape,phase_error.shape)
                 Hest = Hest_sfo* np.exp(-1j * np.mean(phase_error) )
-            
-
 
                 all_equalized_syms = sfo_syms * np.exp(-1j * phase_error) 
                 receivedData,receivedSymbols = self.demodumlate(all_equalized_syms)
@@ -526,16 +362,13 @@ class Estimator:
                 ber,tx_syms = self.ber(receivedSymbols, receivedData)
                 
                 print('BER: ', ber)
-                #if ber <=100:
-                #ph_0.append(Hest[0,10])
-                #ax.axis([-1.5, 1.5, -1.5, 1.5])
+               
                 if usrp_no == 0:
                     rf_ch = rf_ch
                 else:
                     rf_ch = rf_ch+2
 
                 ax.set_title(f'Reveiver, BER => {ber:.4f}, RF :{rf_ch}')
-                #plt.title(f'Reveiver, BER => {ber:.4f}')
                 ax.scatter(receivedSymbols.real,receivedSymbols.imag, s=5,  marker='o')
                 ax.scatter(tx_syms.real,tx_syms.imag, s=20,  marker='o',c='r')
                 #ax.set_xlabel('Real Component')
@@ -555,14 +388,7 @@ class Estimator:
                     Hest00 = sc.loadmat(f'./June_7th/RF{rf_ch+2}/sub6_iq_{count1-1}.mat')['data']
                 else:
                     Hest00 = self.complexChannelGain(dataOutput,lts_indx)
-                
-                
-                '''
-                if count1 != 0 and rf_ch%1 ==0:
-                    Hest00 = sc.loadmat(f'./June_6th/RF{rf_ch}/sub6_iq_{count1-1}.mat')['data']
-                else:
-                    Hest00 = self.complexChannelGain(dataOutput,lts_indx)
-                '''
+              
                 ax2.set_title(f'Absolute Phase Difference, RF :{rf_ch}')
                 ph_diff =np.angle(Hest0[0,1:])-np.angle(Hest00[0,1:])
                 print(ph_diff[27-1:39-1].shape,np.zeros((12,)).shape)
@@ -594,7 +420,6 @@ class Estimator:
                 
             plt.cla()
             '''
-        #return Hest
         return Hest,Hest0
 
 class GNURadioUHD(gr.top_block):
@@ -1062,7 +887,4 @@ class Robot_Interface():
             return 0
 
 if __name__ == "__main__":
-    config = ConfigParser()
-    config.read('my_self.ini')
-    config_data = config['Device']
-    print('Hello World !!')
+    print(' run main script !!!')
