@@ -248,33 +248,33 @@ class Estimator:
         pilot_sc = self.SC_IND_PILOTS
         pilot_syms= np.array([1,1, -1, 1])
         pilots_matrix = np.transpose(np.vstack((pilot_syms,pilot_syms)))
-        # Extract pilots and equalize them by their nominal Tx values
         
+        # Extract pilots and equalize them by their nominal Tx values
         pilot_freq = rxSig_freq_eq[pilot_sc, :]
-        print(rxSig_freq_eq.shape)
-        print(pilot_freq.shape)
-        print(pilots_matrix.shape)
-        print(pilots_matrix)
         pilot_freq_corr = pilot_freq * pilots_matrix
         
         # Compute phase of every RX pilot
         pilot_phase = np.angle(np.fft.fftshift(pilot_freq_corr))
         pilot_phase_uw = np.unwrap(pilot_phase)
+        
         # Slope of pilot phase vs frequency of OFDM symbol
         pilot_shift = np.fft.fftshift(pilot_sc)
         pilot_shift_diff = np.diff(pilot_shift)
         pilot_shift_diff_mod = np.remainder(pilot_shift_diff, 64).reshape(len(pilot_shift_diff), 1)
         pilot_delta = np.matlib.repmat(pilot_shift_diff_mod, 1, n_ofdm_syms)
         pilot_slope = np.mean(np.diff(pilot_phase_uw, axis=0) / pilot_delta, axis=0)
+        
         # Compute SFO correction phases
         tmp = np.array(range(-32, 32)).reshape(len(range(-32, 32)), 1)
         tmp2 = tmp * pilot_slope
         pilot_phase_sfo_corr = np.fft.fftshift(tmp2, 1)
         pilot_phase_corr = np.exp(-1j * pilot_phase_sfo_corr)
+        
         # Apply correction per symbol
         rxSig_freq_eq = rxSig_freq_eq * pilot_phase_corr
         ch_est = ch_est* np.transpose(np.mean(pilot_phase_corr,axis=1))
         #print(rxSig_freq_eq.shape,pilot_phase_corr.shape,np.mean(pilot_phase_corr,axis=1).shape )
+        
         return rxSig_freq_eq,ch_est
     def phase_correction(self, rxSig_freq_eq):
         """
@@ -292,12 +292,14 @@ class Estimator:
         pilots_matrix = np.transpose(np.vstack((pilot_syms,pilot_syms)))
         pilot_freq = rxSig_freq_eq[pilot_sc, :]
         pilot_freq_corr = pilot_freq * pilots_matrix
+        
         # Calculate phase error for each symbol
         phase_error = np.angle(np.mean(pilot_freq_corr, axis=0))
+        
         return phase_error
 
 
-    def ber(self,receivedSymbols,receivedData):
+    def compute_BER(self,receivedSymbols,receivedData):
         if self.MOD_ORDER == 16:
             tx_data = sc.loadmat("./files_req/tx_data_usrp_mgs.mat")['tx_data']
             tx_syms =  sc.loadmat("./files_req/packet_syms_QAM_usrp_mgs.mat")['tx_syms']
@@ -321,20 +323,41 @@ class Estimator:
     
     
     def Rx_processing_noPlot(self,rx_samples,ch_indx):
+        # Downn sample the sample by 2
         output = self.decimate2x(rx_samples,ch_indx)
+        
+        #Time synchronization
         autocorr,payload_ind,lts_ind = self.detectPeaks(output,2)
+        
+        # CFO correction
         dataOutput = self.cfoEstimate(output, lts_ind,do_cfo=False)
+        
+        # channel estimation
         Hest = self.complexChannelGain(dataOutput,lts_ind)
+        
+        # Equalization
         equalizeSymbols = self.equalizeSymbols(dataOutput, payload_ind, Hest)
-        receivedData,receivedSymbols = self.demodumlate(equalizeSymbols)
+        
+        
+        
+        
+        # Apply SFO correction
         sfo_syms,Hest_sfo = self.sfo_correction(equalizeSymbols,Hest)
+        
+        # Appy Phase Error correction
         phase_error = self.phase_correction(equalizeSymbols)
         print(np.mean(sfo_syms,axis=1).shape,Hest.shape,phase_error.shape)
+        
+        # Apply SFO + PE to the channel estimate, to correct residual offsets
         Hest = Hest_sfo* np.exp(-1j * np.mean(phase_error) )
         all_equalized_syms = sfo_syms * np.exp(-1j * phase_error) 
+        
+        # Demodulation of QAM symbols
         receivedData,receivedSymbols = self.demodumlate(all_equalized_syms)
+        #receivedData,receivedSymbols = self.demodumlate(equalizeSymbols)
+        
         tx_syms =  sc.loadmat("./files_req/packet_syms_QAM_usrp_mgs.mat")['tx_syms']
-        ber=self.ber(receivedSymbols, receivedData)
+        ber = self.compute_BER(receivedSymbols, receivedData)
         
         return receivedSymbols,tx_syms,ber,Hest
 
