@@ -6,7 +6,7 @@ Updated: Friday June 9, 2023
 
 """
 
-from main_classes_June_9th import GNURadioUHD,mmWaveSDR, pyUHD,createZMQ,Estimator #Robot_Interface,
+from main_classes_June_9th import GNURadioUHD,mmWaveSDR, pyUHD,createZMQ,Estimator,Robot_Interface
 import time
 from datetime import datetime
 import numpy as np
@@ -25,8 +25,8 @@ def subscriber_zmq(usrp_dict,capture_config,queue,gnuRadioAPI = False):
     local_ip = capture_config['ip']
     pubSubPort = ast.literal_eval(capture_config['pubSubPort'])
     reqRepPort = ast.literal_eval(capture_config['reqRepPort'])
-    cap_dir  =  capture_config['save_dir']
-    
+    sdrAPI = ast.literal_eval(capture_config['API'])
+    cap_dir  =  ast.literal_eval(capture_config['save_dir'])
     
     logging.basicConfig(filename='./config/logFile.log',level=logging.INFO, 
                         format='%(asctime)s : %(processName)s : %(message)s')
@@ -40,7 +40,7 @@ def subscriber_zmq(usrp_dict,capture_config,queue,gnuRadioAPI = False):
     
     if ast.literal_eval(usrp_dict['freq_band']) == 'sub6':
         #initialize the USRP device
-        if ast.literal_eval(usrp_dict['API']) == 'gnuradio':
+        if sdrAPI == 'gnuradio':
             usrp_device = GNURadioUHD(usrp_dict)
             gnuRadioAPI = True
         else:
@@ -171,7 +171,7 @@ def subscriber_zmq(usrp_dict,capture_config,queue,gnuRadioAPI = False):
                 break
         logging.info('Done Capturing')
 
-def publisher_zmq(capture_config,subplot_list):
+def publisher_zmq(capture_config):
     ## Load configured variables
     num_conns,no_samples,num_capture =  int(capture_config['num_conns']), \
                                         int(capture_config['no_samples']), \
@@ -182,9 +182,9 @@ def publisher_zmq(capture_config,subplot_list):
     total_channels  = int(capture_config['total_channels'])
     sdrAPI = ast.literal_eval(capture_config['API'])
     
-    # configMod = ast.literal_eval(capture_config['ModConfig'])
-    # no_Subcs,nOFDMsys,modOr = configMod['num_sc'],configMod['num_ofdm_syms'], \
-    #                           configMod['modOder']
+    configMod = ast.literal_eval(capture_config['ModConfig'])
+    no_Subcs,nOFDMsys,modOr = configMod['num_sc'],configMod['num_ofdm_syms'], \
+                               configMod['modOder']
     
     
     ## load logger
@@ -195,7 +195,12 @@ def publisher_zmq(capture_config,subplot_list):
     
     ## create zmq object for the publisher process 
     zmq_obj = createZMQ(local_ip)
-    #robot_client = Robot_Interface('127.0.0.1', 9999) # connect to the robot server script
+    if ast.literal_eval(capture_config['robot']) == 'yes':
+        robot_client = Robot_Interface('127.0.0.1', 9999) # connect to the robot server script
+        robotServer = True
+    else:
+        robotServer = False
+
     
     ## Initialize ZMQ
     publiser = zmq_obj.createPublisher(pubSubPort)
@@ -203,8 +208,7 @@ def publisher_zmq(capture_config,subplot_list):
     
     recv_data = np.zeros((num_capture,total_channels,no_samples),dtype=np.complex64)
     
-    #estObj = Estimator(numberSubCarriers=no_Subcs, numberOFDMSymbols=nOFDMsys, modOrder=modOr)
-    estObj = Estimator(numberSubCarriers=64, numberOFDMSymbols=2, modOrder=16)
+    estObj = Estimator(numberSubCarriers=no_Subcs, numberOFDMSymbols=nOFDMsys, modOrder=modOr)
     
     ## Check for subcribers
     try:
@@ -220,13 +224,25 @@ def publisher_zmq(capture_config,subplot_list):
     except KeyboardInterrupt:
         print("\n Interrupting  !! .... \n")    
     logging.info(' Done Searching')
-    
+    ## create figure for the results displayed
+    fig = plt.figure(figsize=(8,8))
+    fig.subplots_adjust(top=0.85)
+    fig.tight_layout(pad=3.5)
+    subplot_list = []
+    initial = 220
+    for fig_idx in range(1,5):
+        subplot_list.append(fig.add_subplot(initial+fig_idx))
+
     ## Loop thro' each capture
     for count in range(num_capture):
         #tx = time.time()
         publiser.send_string("Ack", flags=zmq.SNDMORE)
-        #robot_client.send('Hello')
         publiser.send_pyobj(count)
+
+        # Send command to Robot
+        if robotServer == True:
+            robot_client.send('Hello')
+
         print('send both')
         
         ## Receive IQ samples from each subscriber
@@ -246,31 +262,31 @@ def publisher_zmq(capture_config,subplot_list):
                 print(f'Time to receive 1 subscriber: {(time.time()-t_1)*1000} ms')
                 
             #print(f'Delay : {(time.time()- tx)*1000} ms')
-            for iq_samples_dict in IQ:
-                
-                for j in range(2):
-                    h_recv,h0 = estObj.Rx_processing(iq_samples_dict['usrp1'][j,:].reshape(1,-1),subplot_list,j,count,0)
-                    if j%1 ==0:
-                        sc.savemat(f'./June_7th/RF{j}/sub6_iq_{count}.mat',{'data':h0})  # saving the Hest of the first packets 
+            #for iq_samples_dict in IQ:
+            iq_samples_dict = IQ[0]
+            for j in range(2):
+                h_recv,h0 = estObj.Rx_processing(iq_samples_dict['usrp1'][j,:].reshape(1,-1),subplot_list,j,count,0)
+                if j%1 ==0:
+                    sc.savemat(f'./June_7th/RF{j}/sub6_iq_{count}.mat',{'data':h0})  # saving the Hest of the first packets 
                                                                                          # in each captured IQ samples
-                    else:
-                        sc.savemat(f'./June_7th/RF{j}/sub6_iq_{count}.mat',{'data':h0})
+                else:
+                    sc.savemat(f'./June_7th/RF{j}/sub6_iq_{count}.mat',{'data':h0})
                     #IQ.append(h_recv)
-                    print('Done')
+                print('Done')
                 
-                time.sleep(1)
-                for j in range(2):
-                    h_recv,h0 = estObj.Rx_processing(iq_samples_dict['usrp2'][j,:].reshape(1,-1),subplot_list,j,count,1)
-                    if j%1 ==0:
-                        sc.savemat(f'./June_7th/RF{2+j}/sub6_iq_{count}.mat',{'data':h0})
-                    else:
-                        sc.savemat(f'./June_7th/RF{2+j}/sub6_iq_{count}.mat',{'data':h0})
-                    #IQ.append(h_recv)
+            time.sleep(1)
+            for j in range(2):
+                h_recv,h0 = estObj.Rx_processing(iq_samples_dict['usrp2'][j,:].reshape(1,-1),subplot_list,j,count,1)
+                if j%1 ==0:
+                    sc.savemat(f'./June_7th/RF{2+j}/sub6_iq_{count}.mat',{'data':h0})
+                else:
+                    sc.savemat(f'./June_7th/RF{2+j}/sub6_iq_{count}.mat',{'data':h0})
+                #IQ.append(h_recv)
                 
-                    print('Done')    
+            print('Done')    
                     
-                #count+=1
-                time.sleep(1)
+            #count+=1
+            time.sleep(1)
             
         else:
             ## Receive IQ samples from each subscriber
@@ -290,8 +306,9 @@ def publisher_zmq(capture_config,subplot_list):
             recv_data[count] = np.vstack((IQ[0],IQ[1]))
             #print('Ny=  sss_ :',recv_data[count].shape)
             for ch_indx in range(4):
-                receivedSymbols,tx_syms,ber,Hest = estObj.Rx_processing_old(recv_data[count],ch_indx)
+                receivedSymbols,tx_syms,ber,Hest = estObj.Rx_processing_noPlot(recv_data[count],ch_indx,select_peak=2)
                 subplot_list[ch_indx].set_title(f'Reveiver, BER => {ber:.4f}, RF :{ch_indx}')
+                #subplot_list[ch_indx].set_title(f'Reveiver, BER => {ber}, RF :{ch_indx}')
                 #fig_list[ch_indx].scatter(Hest.real,Hest.imag, s=5,  marker='o')
                 subplot_list[ch_indx].scatter(receivedSymbols.real,receivedSymbols.imag, s=5,  marker='o')
                 subplot_list[ch_indx].scatter(tx_syms.real,tx_syms.imag, s=20,  marker='*',c='r')

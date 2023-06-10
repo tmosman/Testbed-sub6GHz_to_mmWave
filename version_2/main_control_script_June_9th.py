@@ -12,6 +12,7 @@ import os
 import logging
 import time
 import matplotlib.pyplot as plt
+import ast
 
 
 if __name__ == "__main__":
@@ -20,29 +21,22 @@ if __name__ == "__main__":
     config = ConfigParser()
     
     ## load config file
-    selectAPI = 1  ## 1 --> gnuradio, else: uhd
+    selectAPI = True  ## True --> gnuradio, else: uhd
     if selectAPI:
         config.read('./config/gnuradio_config.ini')   
     else:
         config.read('./config/uhd_config.ini')
-    
+ 
     capture_config = config['capture']
     num_conns =  int(capture_config['num_conns'])
     
     ## create directory for IQ logging
-    save_dir = capture_config['save_dir']
+    save_dir = ast.literal_eval(capture_config['save_dir'])
     if not os.path.exists(save_dir):
         os.mkdir(save_dir)
      
-    ## create figure for the results displayed
-    fig = plt.figure(figsize=(8,7))
-    fig.subplots_adjust(top=0.85)
-    fig.tight_layout(pad=3.5)
-    subplot_list = []
-    initial = 220
-    for fig_idx in range(1,5):
-        subplot_list.append(initial+fig_idx)
-                              
+    
+    #print(subplot_list)                        
     
     ## Start Processes !!!
     message = input(" -> ")  # take input
@@ -50,7 +44,7 @@ if __name__ == "__main__":
     queue = Queue()
     while message.lower().strip() != 'bye':        
         ## Start Publisher Process
-        p_pub = Process(name='Publisher',target=publisher_zmq, args=(capture_config,subplot_list,))
+        p_pub = Process(name='Publisher',target=publisher_zmq, args=(capture_config,))
         p_pub.start() 
         time.sleep(1)
         print('Publisher Script Started !!')
