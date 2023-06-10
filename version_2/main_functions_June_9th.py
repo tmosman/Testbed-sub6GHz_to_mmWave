@@ -288,7 +288,7 @@ def publisher_zmq(capture_config,subplot_list):
                 
             #print(f'Delay : {(time.time()- tx)*1000} ms')
             recv_data[count] = np.vstack((IQ[0],IQ[1]))
-            print('Ny=  sss_ :',recv_data[count].shape)
+            #print('Ny=  sss_ :',recv_data[count].shape)
             for ch_indx in range(4):
                 receivedSymbols,tx_syms,ber,Hest = estObj.Rx_processing_old(recv_data[count],ch_indx)
                 subplot_list[ch_indx].set_title(f'Reveiver, BER => {ber:.4f}, RF :{ch_indx}')
