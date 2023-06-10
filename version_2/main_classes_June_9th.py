@@ -11,7 +11,6 @@ import time
 import numpy as np
 import zmq
 import socket
-from configparser import ConfigParser
 import sys
 sys.path.insert(1, './eder_files_py3.8')
 from eder import Eder
