@@ -17,7 +17,6 @@ from eder import Eder
 from gnuradio import blocks
 from gnuradio import gr
 from gnuradio import uhd as grUHD
-#from datetime import datetime
 import scipy.io as sc
 import ast
 from scipy import signal as sig
@@ -893,7 +892,6 @@ class mmWaveSDR(gr.top_block):
     
     def close_file(self):
         self.blocks_file_sink.close()
-
 
 class Robot_Interface():
 

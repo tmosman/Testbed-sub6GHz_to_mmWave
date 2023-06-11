@@ -6,7 +6,7 @@ Updated: Friday June 9, 2023
 
 """
 
-from main_classes_June_9th import GNURadioUHD,mmWaveSDR, pyUHD,createZMQ,Estimator,Robot_Interface
+from main_classes import * #GNURadioUHD,mmWaveSDR, pyUHD,createZMQ,Estimator,Robot_Interface
 import time
 from datetime import datetime
 import numpy as np
@@ -15,8 +15,7 @@ import logging
 import matplotlib.pyplot as plt
 import scipy.io as sc
 import ast
-#import uhd
-#from usrp_func import _config_streamer,_start_stream,_config_usrp,_start_stream_new,_stop_stream,init_usrp_new,Capture_samples_new
+
 
 def subscriber_zmq(usrp_dict,capture_config,queue,gnuRadioAPI = False):
     ## configured variables
@@ -63,28 +62,23 @@ def subscriber_zmq(usrp_dict,capture_config,queue,gnuRadioAPI = False):
             for k in range(num_runs):
                 print(f'--- Capture {k} ----')
                 if 'Ack' in str(subcriber.recv_string()):
-                    
                     msg_content = subcriber.recv_pyobj()
                     t1 = time.time()
                     usrp_device.open_file([f'{cap_dir}cap_{k}.dat',f'{cap_dir}cap_1_{k}.dat'],2)
                     time.sleep(2)
                     usrp_device.close_file(2)
                     
+                    ## load and reshape the IQ samples saved 
                     usrp1_data = np.fromfile(f'{cap_dir}cap_{k}.dat',dtype=np.complex64)
                     usrp1_data = usrp1_data.reshape(-1,2).transpose()
-                    
                     usrp2_data = np.fromfile(f'{cap_dir}cap_1_{k}.dat',dtype=np.complex64)
                     usrp2_data = usrp2_data.reshape(-1,2).transpose()
+
                     samples = {'data':'sub6',  'usrp1':usrp1_data,'usrp2':usrp2_data}
-    
-                    #samples = usrp_device.capture_samples(num_samps)
                     print(f'Time to capture: {(time.time()-t1)*1000} ms')
                     #print(f'Time now : {(datetime.now().microsecond)/1000}')
-                    logging.info(f'{usrp_device.usrp_id} capture at: {(datetime.now().microsecond)/1000}')
-                    #print(samples.shape)
-                    #print(samples)
+                    logging.info(f'{usrp_device.usrp_id} capture at: {(datetime.now().microsecond)/1000} nano secs')
                     # Send IQ samples as response
-                    #samples = np.zeros((4,1700))
                     requester.send_pyobj(samples)
                     requester.recv()
                     print(f'Latency {int(msg_content)}: {(time.time()-t1)*1000} ms')
@@ -103,7 +97,6 @@ def subscriber_zmq(usrp_dict,capture_config,queue,gnuRadioAPI = False):
             print('Using UHD Python API .... ')
             # Initialize USRP Streamer
             usrp_device._config_streamer()
-            
             for k in range(num_runs):
                 print(f'--- Capture {k} ----')
                 if 'Ack' in str(subcriber.recv_string()):
@@ -228,10 +221,8 @@ def publisher_zmq(capture_config):
     fig = plt.figure(figsize=(8,8))
     fig.subplots_adjust(top=0.85)
     fig.tight_layout(pad=3.5)
-    subplot_list = []
     initial = 220
-    for fig_idx in range(1,5):
-        subplot_list.append(fig.add_subplot(initial+fig_idx))
+    subplot_list = [fig.add_subplot(initial+fig_idx) for fig_idx in range(1,5)]
 
     ## Loop thro' each capture
     for count in range(num_capture):
@@ -253,27 +244,20 @@ def publisher_zmq(capture_config):
             while subscribers_in  < num_conns:
                 t_1 = time.time()
                 data_recv = responder.recv_pyobj()
-                #recv_data[i,subscribers_in,:]
                 if data_recv['data'] == 'sub6':
                     IQ.append(data_recv)
-                #print(f' Print shape : {data_recv.shape}')
+
                 subscribers_in += 1
                 responder.send(b'')
                 print(f'Time to receive 1 subscriber: {(time.time()-t_1)*1000} ms')
-                
-            #print(f'Delay : {(time.time()- tx)*1000} ms')
-            #for iq_samples_dict in IQ:
             iq_samples_dict = IQ[0]
             for j in range(2):
                 h_recv,h0 = estObj.Rx_processing(iq_samples_dict['usrp1'][j,:].reshape(1,-1),subplot_list,j,count,0)
                 if j%1 ==0:
-                    sc.savemat(f'./June_7th/RF{j}/sub6_iq_{count}.mat',{'data':h0})  # saving the Hest of the first packets 
-                                                                                         # in each captured IQ samples
+                    sc.savemat(f'./June_7th/RF{j}/sub6_iq_{count}.mat',{'data':h0})  # saving the Hest of the first packets  in each captured IQ samples                                                                     
                 else:
                     sc.savemat(f'./June_7th/RF{j}/sub6_iq_{count}.mat',{'data':h0})
-                    #IQ.append(h_recv)
-                print('Done')
-                
+            print('Done')   
             time.sleep(1)
             for j in range(2):
                 h_recv,h0 = estObj.Rx_processing(iq_samples_dict['usrp2'][j,:].reshape(1,-1),subplot_list,j,count,1)
@@ -281,30 +265,21 @@ def publisher_zmq(capture_config):
                     sc.savemat(f'./June_7th/RF{2+j}/sub6_iq_{count}.mat',{'data':h0})
                 else:
                     sc.savemat(f'./June_7th/RF{2+j}/sub6_iq_{count}.mat',{'data':h0})
-                #IQ.append(h_recv)
-                
             print('Done')    
-                    
-            #count+=1
             time.sleep(1)
             
         else:
             ## Receive IQ samples from each subscriber
-            #estObj = EstimatorOld(numberSubCarriers=64, numberOFDMSymbols=2, modOrder=16)
             while subscribers_in  < num_conns:
                 t_1 = time.time()
                 data_recv = responder.recv_pyobj()
-                #recv_data[i,subscribers_in,:]
-                
                 IQ.append(data_recv)
                 print(f' Print shape : {data_recv.shape}')
                 subscribers_in += 1
                 responder.send(b'')
                 print(f'Time to receive 1 subscriber: {(time.time()-t_1)*1000} ms')
-                
-            #print(f'Delay : {(time.time()- tx)*1000} ms')
+        
             recv_data[count] = np.vstack((IQ[0],IQ[1]))
-            #print('Ny=  sss_ :',recv_data[count].shape)
             for ch_indx in range(4):
                 receivedSymbols,tx_syms,ber,Hest = estObj.Rx_processing_noPlot(recv_data[count],ch_indx,select_peak=2)
                 subplot_list[ch_indx].set_title(f'Reveiver, BER => {ber:.4f}, RF :{ch_indx}')
@@ -313,8 +288,6 @@ def publisher_zmq(capture_config):
                 subplot_list[ch_indx].scatter(receivedSymbols.real,receivedSymbols.imag, s=5,  marker='o')
                 subplot_list[ch_indx].scatter(tx_syms.real,tx_syms.imag, s=20,  marker='*',c='r')
             sc.savemat(f'./uhd_capture/sub6_iq_{count}.mat',{'data':recv_data[count]})
-        #estObj.Rx_processing(recv_data[i])
-        #sc.savemat(f'sub6_iq_{i}.mat',{'data':recv_data[i]})
     plt.show() 
         
        

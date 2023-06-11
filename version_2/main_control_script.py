@@ -7,7 +7,7 @@ Updated on June 9, 2023
 """
 from  multiprocessing import Process,Queue
 from configparser import ConfigParser
-from main_functions_June_9th import publisher_zmq,subscriber_zmq
+from main_functions import publisher_zmq,subscriber_zmq
 import os
 import logging
 import time
@@ -35,9 +35,7 @@ if __name__ == "__main__":
     if not os.path.exists(save_dir):
         os.mkdir(save_dir)
      
-    
-    #print(subplot_list)                        
-    
+ 
     ## Start Processes !!!
     message = input(" -> ")  # take input
     processes = []
@@ -49,7 +47,7 @@ if __name__ == "__main__":
         time.sleep(1)
         print('Publisher Script Started !!')
         
-        ##
+        
         for i in range(num_conns):
             usrp_configData = config[f'Device{i}']
             p = Process(name=f'Subscriber{i}',target=subscriber_zmq, args=(usrp_configData,capture_config,queue,))
@@ -57,9 +55,7 @@ if __name__ == "__main__":
             print(queue.get())
             processes.append(p)
             print('Subcriber !!!')
-        
-        
-        
+
         for p in processes:
             print(queue.get())
             p.join()
