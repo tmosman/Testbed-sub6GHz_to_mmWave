@@ -8,7 +8,7 @@ Created on Tue Jun 13 11:58:28 2023
 import numpy as np
 import  matplotlib.pyplot as plt
 from channels_compute import Estimator
-save_dir = './capture1/'
+save_dir = r'E:/summer2023_sub6_system/Data_June_12th/capture1/'
 
 estObj = Estimator(numberSubCarriers=64, numberOFDMSymbols=2, modOrder=16)
 
