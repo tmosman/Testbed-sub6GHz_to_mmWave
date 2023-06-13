@@ -16,7 +16,6 @@ import matplotlib.pyplot as plt
 import scipy.io as sc
 import ast
 
-
 def subscriber_zmq(usrp_dict,capture_config,queue,gnuRadioAPI = False):
     ## configured variables
     num_samps,num_runs =  int(capture_config['no_samples']),\
@@ -65,7 +64,7 @@ def subscriber_zmq(usrp_dict,capture_config,queue,gnuRadioAPI = False):
                     msg_content = subcriber.recv_pyobj()
                     t1 = time.time()
                     usrp_device.open_file([f'{cap_dir}cap_{k}.dat',f'{cap_dir}cap_1_{k}.dat'],2)
-                    time.sleep(2)
+                    time.sleep(1)
                     usrp_device.close_file(2)
                     
                     ## load and reshape the IQ samples saved 
@@ -74,7 +73,7 @@ def subscriber_zmq(usrp_dict,capture_config,queue,gnuRadioAPI = False):
                     usrp2_data = np.fromfile(f'{cap_dir}cap_1_{k}.dat',dtype=np.complex64)
                     usrp2_data = usrp2_data.reshape(-1,2).transpose()
 
-                    samples = {'data':'sub6',  'usrp1':usrp1_data,'usrp2':usrp2_data}
+                    samples = {'dataType':'sub6',  'usrp1':usrp1_data,'usrp2':usrp2_data}
                     print(f'Time to capture: {(time.time()-t1)*1000} ms')
                     #print(f'Time now : {(datetime.now().microsecond)/1000}')
                     logging.info(f'{usrp_device.usrp_id} capture at: {(datetime.now().microsecond)/1000} nano secs')
@@ -122,47 +121,55 @@ def subscriber_zmq(usrp_dict,capture_config,queue,gnuRadioAPI = False):
             logging.info('Done Capturing')
             
     else:
-        usrp_device = mmWaveSDR(usrp_dict)
-        save_file = 'cap.dat'
+        mmW_device = mmWaveSDR(usrp_dict)
+        mmW_device.usrp_device._config_streamer()
         # Initialize Array
-        #my_Array = Array(sn_id)
-        usrp_device.phasedArray.initialize_Array(62.64e9)
+        mmW_device.init_Parray(ast.literal_eval(usrp_dict['carrier_freq']))
         print(' -- Siver Array: Initialized -- ')
         queue.put(f'{usrp_dict["array"]} initialized')
         beams_pwrs = np.zeros((num_runs, 63))
-            
+
+        try:
+            # Sync 
+            requester.send_string('')
+            print(f'Synced with response !! {requester.recv().decode()}')
+        except KeyboardInterrupt:
+            print("\n Interrupting  !! .... \n")
+        queue.put('Request-Response connections established !!!')
+        print(' -- Subscriber and Request ZMQ Connections Initialized -- ')
+
         for k in range(num_runs):
             print(f'--- Capture {k} ----')
             if 'Ack' in str(subcriber.recv_string()):
                 msg_content = subcriber.recv_pyobj()
                 t1 = time.time()
                 sweep_idx = int(msg_content)
-                usrp_device.phasedArray.start_Sweep()
+                mmW_device.phasedArray.start_Sweep()
+                #print('PA start sweep')
                 # Beam Sweeping
                 for beam_dir in np.arange(1,64):
                     t1 = time.time()
-                    usrp_device.phasedArray.set_dir(beam_dir)
-                    usrp_device.save_iq_stream(save_file)
-                    #samples = usrp_device.capture_samples(num_samps)
-                    print(f'Time to set : {(time.time()-t1)*1000} ms')
-                    samples = np.fromfile(save_file,dtype=np.complex64)
-                    #samples = samples.reshape(-1,).transpose()
-                        
+                    mmW_device.phasedArray.set_dir(beam_dir)
+                    #usrp_device.save_iq_stream(save_file)
+                    mmW_device.phasedArray.set_dir(beam_dir)
+                    samples = mmW_device.usrp_device.capture_samples_new(num_samps)
+                    #print(f'Time to set : {(time.time()-t1)*1000} ms')                        
                     beams_pwrs[sweep_idx, beam_dir-1] = np.mean(np.abs(samples.reshape(-1,)) ** 2)
                 plt.plot(beams_pwrs[sweep_idx,:])
-                plt.pause(0.0001)
-                    # Send IQ samples as response
-                requester.send_pyobj(np.zeros([int(usrp_dict["no_channels_per_usrp"]),num_samps]))
+                plt.pause(0.01)
+                # Send best beam and power vector as a response
+                samples = {'dataType':'mmWave',  'pwr':beams_pwrs[sweep_idx,:],'bestBeam':np.argmax(beams_pwrs[sweep_idx,:])+1}
+                requester.send_pyobj(samples)
                 requester.recv()
-                print(f'Latency {int(msg_content)}: {(time.time()-t1)*1000} ms')
-                plt.plot(np.real(samples[0,:]))
-                plt.pause(2)
+                #print(f'Latency {int(msg_content)}: {(time.time()-t1)*1000} ms')
+                #plt.plot(np.real(samples[0,:]))
+                #plt.pause(2)
                     
             else:
                 subcriber.close()
                 requester.close()
                 break
-        logging.info('Done Capturing')
+        logging.info('Done mmWave Capturing')
 
 def publisher_zmq(capture_config):
     ## Load configured variables
@@ -174,7 +181,7 @@ def publisher_zmq(capture_config):
     reqRepPort = ast.literal_eval(capture_config['reqRepPort'])
     total_channels  = int(capture_config['total_channels'])
     sdrAPI = ast.literal_eval(capture_config['API'])
-    
+    dualSystem = ast.literal_eval(capture_config['plus_mmWave'])
     configMod = ast.literal_eval(capture_config['ModConfig'])
     no_Subcs,nOFDMsys,modOr = configMod['num_sc'],configMod['num_ofdm_syms'], \
                                configMod['modOder']
@@ -200,6 +207,7 @@ def publisher_zmq(capture_config):
     responder = zmq_obj.createREP(reqRepPort)
     
     recv_data = np.zeros((num_capture,total_channels,no_samples),dtype=np.complex64)
+    mmW_data = np.zeros((num_capture,63),dtype=np.complex64)
     
     estObj = Estimator(numberSubCarriers=no_Subcs, numberOFDMSymbols=nOFDMsys, modOrder=modOr)
     
@@ -218,7 +226,7 @@ def publisher_zmq(capture_config):
         print("\n Interrupting  !! .... \n")    
     logging.info(' Done Searching')
     ## create figure for the results displayed
-    fig = plt.figure(figsize=(8,8))
+    fig = plt.figure(2,figsize=(8,8))
     fig.subplots_adjust(top=0.85)
     fig.tight_layout(pad=3.5)
     initial = 220
@@ -244,29 +252,32 @@ def publisher_zmq(capture_config):
             while subscribers_in  < num_conns:
                 t_1 = time.time()
                 data_recv = responder.recv_pyobj()
-                if data_recv['data'] == 'sub6':
+                if data_recv['dataType'] == 'sub6':
                     IQ.append(data_recv)
+                elif data_recv['dataType'] == 'mmWave':
+                    mmW_data[count,:] = data_recv['pwr']
 
                 subscribers_in += 1
                 responder.send(b'')
                 print(f'Time to receive 1 subscriber: {(time.time()-t_1)*1000} ms')
-            iq_samples_dict = IQ[0]
-            for j in range(2):
-                h_recv,h0 = estObj.Rx_processing(iq_samples_dict['usrp1'][j,:].reshape(1,-1),subplot_list,j,count,0)
-                if j%1 ==0:
-                    sc.savemat(f'./June_7th/RF{j}/sub6_iq_{count}.mat',{'data':h0})  # saving the Hest of the first packets  in each captured IQ samples                                                                     
-                else:
-                    sc.savemat(f'./June_7th/RF{j}/sub6_iq_{count}.mat',{'data':h0})
-            print('Done')   
-            time.sleep(1)
-            for j in range(2):
-                h_recv,h0 = estObj.Rx_processing(iq_samples_dict['usrp2'][j,:].reshape(1,-1),subplot_list,j,count,1)
-                if j%1 ==0:
-                    sc.savemat(f'./June_7th/RF{2+j}/sub6_iq_{count}.mat',{'data':h0})
-                else:
-                    sc.savemat(f'./June_7th/RF{2+j}/sub6_iq_{count}.mat',{'data':h0})
-            print('Done')    
-            time.sleep(1)
+            if dualSystem == 'no':
+                iq_samples_dict = IQ[0]
+                for j in range(2):
+                    h_recv,h0 = estObj.Rx_processing(iq_samples_dict['usrp1'][j,:].reshape(1,-1),subplot_list,j,count,0)
+                    if j%1 ==0:
+                        sc.savemat(f'./June_7th/RF{j}/sub6_iq_{count}.mat',{'data':h0})  # saving the Hest of the first packets  in each captured IQ samples                                                                     
+                    else:
+                        sc.savemat(f'./June_7th/RF{j}/sub6_iq_{count}.mat',{'data':h0})
+                print('Done')   
+                time.sleep(1)
+                for j in range(2):
+                    h_recv,h0 = estObj.Rx_processing(iq_samples_dict['usrp2'][j,:].reshape(1,-1),subplot_list,j,count,1)
+                    if j%1 ==0:
+                        sc.savemat(f'./June_7th/RF{2+j}/sub6_iq_{count}.mat',{'data':h0})
+                    else:
+                        sc.savemat(f'./June_7th/RF{2+j}/sub6_iq_{count}.mat',{'data':h0})
+                print('Done')    
+                time.sleep(1)
             
         else:
             ## Receive IQ samples from each subscriber
@@ -288,15 +299,15 @@ def publisher_zmq(capture_config):
                 subplot_list[ch_indx].scatter(receivedSymbols.real,receivedSymbols.imag, s=5,  marker='o')
                 subplot_list[ch_indx].scatter(tx_syms.real,tx_syms.imag, s=20,  marker='*',c='r')
             sc.savemat(f'./uhd_capture/sub6_iq_{count}.mat',{'data':recv_data[count]})
+    #if dualSystem == 'yes':
     plt.show() 
         
        
     print("Data Captution Done !!!")
     publiser.send_string("close", flags=zmq.SNDMORE)
+    np.save(f'{ast.literal_eval(capture_config["save_dir"])}power_vector.npy',mmW_data)
     publiser.close()
     responder.close()
-    
-    
     
 if __name__ == "__main__":
     print(' run main script !!!')

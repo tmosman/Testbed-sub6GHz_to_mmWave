@@ -1,0 +1,17 @@
+{
+  "rx_gain_ctrl_bfrf": {
+    "value": 255
+  },
+  "rx_gain_ctrl_bb1": {
+    "value": 255
+  },
+  "rx_gain_ctrl_bb3": {
+    "value": 119
+  },
+  "rx_gain_ctrl_bb2": {
+    "value": 17
+  },
+  "trx_rx_on": {
+    "value": 2070937
+  }
+}

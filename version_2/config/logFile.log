@@ -1,11 +1,11 @@
-06/10/2023 01:10:34 AM : Publisher :  Done Searching
-2023-06-10 01:10:36,723 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 723.478
-2023-06-10 01:10:36,945 : Subscriber0 : Done Captured IQ stream at 0
-2023-06-10 01:10:44,794 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 794.558
-2023-06-10 01:10:45,026 : Subscriber0 : Done Captured IQ stream at 1
-2023-06-10 01:10:52,545 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 545.357
-2023-06-10 01:10:52,759 : Subscriber0 : Done Captured IQ stream at 2
-2023-06-10 01:11:00,426 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 426.929
-2023-06-10 01:11:00,655 : Subscriber0 : Done Captured IQ stream at 3
-2023-06-10 01:11:08,582 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 582.902
-2023-06-10 01:11:08,813 : Subscriber0 : Done Captured IQ stream at 4
+06/11/2023 11:29:02 PM : Publisher :  Done Searching
+2023-06-11 23:29:03,238 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 238.411 nano secs
+2023-06-11 23:29:03,358 : Subscriber0 : Done Captured IQ stream at 0
+2023-06-11 23:29:08,044 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 44.053 nano secs
+2023-06-11 23:29:08,160 : Subscriber0 : Done Captured IQ stream at 1
+2023-06-11 23:29:12,578 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 578.821 nano secs
+2023-06-11 23:29:12,694 : Subscriber0 : Done Captured IQ stream at 2
+2023-06-11 23:29:17,190 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 190.89 nano secs
+2023-06-11 23:29:17,307 : Subscriber0 : Done Captured IQ stream at 3
+2023-06-11 23:29:22,009 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 9.054 nano secs
+2023-06-11 23:29:22,126 : Subscriber0 : Done Captured IQ stream at 4

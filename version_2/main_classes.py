@@ -563,9 +563,9 @@ class pyUHD:
         self.channels = list(range(int(self.deviceInfo["no_channels_per_usrp"])))
         self.sample_rate = float(self.deviceInfo["sampleRate"])
         self.gain = int(self.deviceInfo["gain"])
-        self.type = str(self.deviceInfo["type"])
-        self.duration = float(self.deviceInfo["tx_duration"])
-        
+        self.mode = str(self.deviceInfo["mode"])
+        if 'TX' in self.mode:
+            self.duration = float(self.deviceInfo["tx_duration"])
         
         self.center_freq = uhd.libpyuhd.types.tune_request(float(self.deviceInfo["centerFreq"]))
         self.usrp_trx = uhd.usrp.MultiUSRP(f'mboard_serial={self.usrp_id}')
@@ -625,7 +625,7 @@ class pyUHD:
         Set up the correct streamer
         """ 
         
-        if 'TX' in self.type:
+        if 'TX' in self.mode:
             self.metadata =  uhd.types.TXMetadata()
             self.streamer = self.usrp_trx.get_tx_stream(self.st_args)
             self.tx_path = self.deviceInfo["path"]
@@ -639,7 +639,7 @@ class pyUHD:
         Set up the correct streamer
         """ 
         
-        if 'TX' in self.type:
+        if 'TX' in self.mode:
             self.metadata =  uhd.types.TXMetadata()
             self.streamer = self.usrp_trx.get_tx_stream(self.st_args)
             self.tx_path = self.deviceInfo["path"]
@@ -657,7 +657,32 @@ class pyUHD:
         """
         # stream_cmd = uhd.types.StreamCMD(uhd.types.StreamMode.num_done)
         # stream_cmd.num_samps = num_to_done
-        if 'RX' in self.type:
+        if 'RX' in self.mode:
+            stream_cmd = uhd.types.StreamCMD(uhd.types.StreamMode.start_cont)
+            stream_cmd.stream_now = (len(self.channels) == 1)
+            if not stream_cmd.stream_now:
+                #stream_cmd.time_spec = uhd.libpyuhd.types.time_spec(3.0) # set start time (try tweaking this)
+                time_set = self.usrp_trx.get_time_now().get_real_secs() + 0.05
+                stream_cmd.time_spec = uhd.libpyuhd.types.time_spec(time_set)
+                
+                print(f'The time set at: {time_set}')
+            self.streamer.issue_stream_cmd(stream_cmd)
+        else:
+            # Now stream
+            #if start_time is not None:
+            time_set = self.usrp_trx.get_time_now().get_real_secs() + 0.05
+            self.metadata.time_spec = uhd.libpyuhd.types.time_spec(time_set)
+            #stream_cmd.time_spec = uhd.libpyuhd.types.time_spec(time_set)
+            #print('')
+        return 1
+    def _start_stream_mmW(self):
+        """
+        Issue the start-stream command.
+        """
+        num_to_done = 1000
+        stream_cmd = uhd.types.StreamCMD(uhd.types.StreamMode.num_done)
+        stream_cmd.num_samps = num_to_done
+        if 'RX' in self.mode:
             stream_cmd = uhd.types.StreamCMD(uhd.types.StreamMode.start_cont)
             stream_cmd.stream_now = (len(self.channels) == 1)
             if not stream_cmd.stream_now:
@@ -690,7 +715,7 @@ class pyUHD:
         #print(streamer.recv(recv_buffer, metadata))
         while self.streamer.recv(recv_buffer, metadata):
             pass
-        print(f'Time Meta : {(time.time()-tx)*1000} ms')
+        #print(f'Time Meta : {(time.time()-tx)*1000} ms')
         
         
     def capture_samples(self,num_samps):
@@ -711,14 +736,15 @@ class pyUHD:
                             recv_buffer[:, 0:real_samps]
                 recv_samps += real_samps
     
-        print(' Capture Done !! ')
+        #print(' Capture Done !! ')
     
         # Stop and clean up
         self._stop_stream()
         
         return result
+    
     def capture_samples_new(self,num_samps):
-        #self._start_stream()
+        self._start_stream_mmW()
         # Set up buffers and counters
         result = np.empty((len(self.channels), num_samps), dtype=np.complex64)
         recv_buffer = np.zeros(
@@ -735,7 +761,7 @@ class pyUHD:
                             recv_buffer[:, 0:real_samps]
                 recv_samps += real_samps
     
-        print(' Capture Done !! ')
+        #print(' Capture Done !! ')
     
         # Stop and clean up
         #self._stop_stream()
@@ -834,12 +860,28 @@ class Array(Eder):
         self.rx.bf.idx.inc()
         return 1
     
+    def set_dir(self, direction):
+        self.rx.set_beam(int(direction))
+	    #self.ue.rx.bf.idx.set(int(direction))
+        #self.rx.bf.idx.inc()
+        return 1
     
     def disable(self):
         self.rx_disable()
         return 1
 
-class mmWaveSDR(gr.top_block):
+class mmWaveSDR:
+    def __init__(self,config_data):
+        self.deviceInfo = config_data
+        self.usrp_device = pyUHD(self.deviceInfo)
+        sn_id = ast.literal_eval(self.deviceInfo['array'])
+        self.phasedArray = Array(sn_id)
+
+    def init_Parray(self,carrier_freq):
+        self.phasedArray.initialize_Array(float(carrier_freq))
+        return 1
+'''
+class mmWaveSDRx(gr.top_block):
     def __init__(self,config_data):
         gr.top_block.__init__(self, "BS_RX")
         self.deviceInfo = config_data
@@ -892,6 +934,8 @@ class mmWaveSDR(gr.top_block):
     
     def close_file(self):
         self.blocks_file_sink.close()
+
+'''
 
 class Robot_Interface():
 

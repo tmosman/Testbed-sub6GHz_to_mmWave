@@ -1,0 +1,113 @@
+%This is a comment, only full line comments are available
+%Syntax är:
+%Gruppnamn\n 																							  
+%register name : [physical address, size, power-on/reset value] :
+%Matrix of controls
+%in register[[name of control, startBit (0, endBit]]\n
+%If a control only uses one bit, set both to that bit.
+%It is important that a register is declared on one line
+SYSTEM
+chip_id:              [0x0000, 4, 0x02711702]: [["Chip ID", 0, 31]]
+chip_id_sw_en:        [0x0004, 1, 0x00]:       [["Chip SW control", 0, 0]] 
+tx_rx_sw_ctrl:        [0x0005, 1, 0x00]:       [["TX/RX switch control", 0, 2]] 
+fast_clk_ctrl:        [0x0006, 1, 0x00]:       [["Digital clock control"],,] 
+gpio_tx_rx_sw_ctrl:   [0x0008, 1, 0x00]:
+gpio_agc_rst_ctrl:    [0x0009, 1, 0x00]:
+gpio_agc_start_ctrl:  [0x000a, 1, 0x00]:
+gpio_agc_done_ctrl:   [0x000b, 1, 0x02]:
+bist_amux_ctrl:       [0x000c, 1, 0x00]:
+bist_bgtest_ctrl:     [0x000d, 1, 0x00]:
+bist_ot_ctrl:         [0x000e, 1, 0x00]:
+bist_ot_temp:         [0x000f, 1, 0x80]:
+bist_ot_rx_off_mask:  [0x0011, 3, 0x00]:
+bist_ot_tx_off_mask:  [0x0015, 3, 0x00]:
+#
+BIAS
+bias_ctrl:            [0x0020, 1, 0x00]:
+bias_ctrl_rx:         [0x0025, 3, 0x00]:
+bias_ctrl_tx:         [0x0029, 3, 0x00]:
+bias_off_ctrl_rx:     [0x002D, 3, 0x00]:
+bias_off_ctrl_tx:     [0x0031, 3, 0x00]:
+bias_vco_x3:          [0x0034, 1, 0x00]:
+bias_pll:             [0x0035, 1, 0x00]:
+bias_lo:              [0x0036, 1, 0x00]:
+bias_tx:              [0x0038, 2, 0x00]:
+bias_rx:              [0x003a, 2, 0x00]:
+#
+PLL
+pll_en:               [0x0040, 1, 0x00]:
+pll_divn:             [0x0041, 1, 0x00]:
+pll_pfd:              [0x0042, 1, 0x00]:
+pll_chp:              [0x0043, 1, 0x00]:
+pll_ld_mux_ctrl:      [0x0044, 1, 0x00]:
+pll_ld_test_mux_in:   [0x0045, 1, 0x00]:
+pll_ref_in_lvds_en:   [0x0046, 1, 0x00]:
+#
+TX
+tx_bb_ctrl:           [0x0060, 1, 0x00]:
+tx_bb_q_dco:          [0x0061, 1, 0x00]:
+tx_bb_i_dco:          [0x0062, 1, 0x00]:
+tx_bb_phase:          [0x0063, 1, 0x00]:
+tx_bb_gain:           [0x0064, 1, 0x00]:
+tx_bb_iq_gain:        [0x0065, 1, 0x00]:
+tx_rf_gain:           [0x0066, 1, 0x00]:
+tx_bf_gain:           [0x0067, 1, 0x00]:
+tx_bf_pdet_mux:       [0x0068, 1, 0x00]:
+tx_rf_mix_dc_lvl:     [0x0069, 1, 0x00]:
+#
+ADC
+adc_ctrl:             [0x0080, 1, 0x00]:
+adc_clk_div:          [0x0081, 1, 0x00]:
+adc_sample_cycle:     [0x0082, 1, 0x00]:
+adc_sample:           [0x0090, 16, 0x0]:
+#
+VCO
+vco_en:               [0x00A0, 1, 0x00]:
+vco_dig_tune:         [0x00A1, 1, 0x00]:
+vco_ibias:            [0x00A2, 1, 0x00]:
+vco_vtune:            [0x00A3, 1, 0x00]:
+vco_atc_hi_th:        [0x00A4, 1, 0x00]:
+vco_atc_lo_th:        [0x00A5, 1, 0x00]:
+vco_alc_hi_th:        [0x00A6, 1, 0x00]:
+vco_amux_ctrl:        [0x00A7, 1, 0x00]:
+vco_tune_ctrl:        [0x00A8, 1, 0x00]:
+vco_alc_del:          [0x00A9, 1, 0x00]:
+vco_override_ctrl:    [0x00AA, 2, 0x00]:
+vco_tune_loop_del:    [0x00AD, 3, 0x00]:
+vco_vtune_set_del:    [0x00B1, 3, 0x00]:
+vco_vtune_unset_del:  [0x00B5, 3, 0x00]:
+vco_tune_status:      [0x00B8, 1, 0x00]:
+vco_tune_det_status:  [0x00B9, 1, 0x00]:
+vco_tune_freq_cnt:    [0x00BA, 2, 0x01FF]:
+vco_tune_dig_tune:    [0x00BC, 1, 0x20]:
+vco_tune_ibias:       [0x00BD, 1, 0x00]:
+vco_tune_fd_polarity: [0x00BE, 1, 0x01]:
+#
+RX
+rx_bf_rf_gain:        [0x00C0, 1, 0x00]:
+rx_bb_en:             [0x00C1, 1, 0x00]:
+rx_bb_biastrim:       [0x00C2, 1, 0x00]:
+rx_bb_q_vga_1_2:      [0x00C4, 1, 0x00]:
+rx_bb_q_vga_1db:      [0x00C5, 1, 0x00]:
+rx_bb_i_vga_1_2:      [0x00C6, 1, 0x00]:
+rx_bb_i_vga_1db:      [0x00C7, 1, 0x00]:
+rx_bb_q_dco:          [0x00C8, 2, 0x00]:
+rx_bb_i_dco:          [0x00CA, 2, 0x00]:
+rx_bb_test_ctrl:      [0x00CC, 1, 0x00]:
+rx_bb_pdet_th:        [0x00D3, 5, 0x00]:
+#
+AGC
+agc_en:               [0x00E0, 1, 0x00]:
+agc_start_delay:      [0x00E1, 1, 0x00]:
+agc_timeout:          [0x00E2, 1, 0x00]:
+agc_gain_change_delay:[0x00E3, 1, 0x00]:
+agc_detector_mask:    [0x00E4, 2, 0x1F1F]:
+agc_use_agc_ctrls:    [0x00E6, 1, 0x00]:
+agc_ctrl:             [0x00E7, 1, 0x00]:
+agc_bf_rf_gain_lvl:   [0x00E9, 4, 0x00]:
+agc_bb_gain_1db_lvl:  [0x00ED, 3, 0x00]:
+agc_status_detectors: [0x00F0, 2, 0x00]:
+agc_status:           [0x00F2, 1, 0x00]:
+agc_gain_db:          [0x00F3, 1, 0xF4]:
+agc_backoff_db:       [0x00F4, 2, 0x00]:
+agc_gain_bits:        [0x00FB, 5, 0x00]:

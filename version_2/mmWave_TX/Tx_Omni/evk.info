@@ -1,0 +1,615 @@
+2023-06-12 00:48:14,481 DEBUG: None
+2023-06-12 00:48:14,481 DEBUG: **** New session started on Mon Jun 12 00:48:14 2023
+2023-06-12 00:48:14,481 INFO :   EVK SW Version  20220406_1715
+2023-06-12 00:48:14,757 INFO :   [1mChip type Eder B MMF detected.
+2023-06-12 00:48:14,758 INFO :   [1mchip_type: Eder B MMF
+2023-06-12 00:48:14,768 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 00:48:14,768 INFO :   Chip REF already initialized.
+2023-06-12 00:48:14,783 INFO :   Chip ADC init.
+2023-06-12 00:48:16,030 INFO :   temp_calib_offset: -9.25
+2023-06-12 00:48:16,031 INFO :   [1mrfm_type: BFM06010
+2023-06-12 00:48:17,025 INFO :   Chip present (chip_id = 0x02741812).
+2023-06-12 00:48:17,115 INFO :   RX Reset
+2023-06-12 00:48:17,141 INFO :   TX Reset
+2023-06-12 00:48:17,283 INFO :   Chip reset.
+2023-06-12 00:48:17,297 INFO :   Chip VCO init.
+2023-06-12 00:48:17,309 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 00:48:17,310 INFO :   Chip REF init.
+2023-06-12 00:48:17,331 INFO :   Chip ADC init.
+2023-06-12 00:48:17,337 INFO :   Chip TEMP init.
+2023-06-12 00:48:17,879 INFO :   Chip PLL init
+2023-06-12 00:48:17,880 INFO : Setting frequency to 62.64 GHz
+2023-06-12 00:48:17,903 INFO : Temperature: 49.277 C
+2023-06-12 00:48:17,904 INFO : vco_vtune_atc_lo_th: 0x92 (1.603 V)
+2023-06-12 00:48:17,905 INFO : vco_tune_ctrl: 0x4
+2023-06-12 00:48:17,921 INFO : vco_tune_status [0x7e]: 0x7e
+2023-06-12 00:48:17,922 INFO : vco_tune_det_status[0] [1]: 0x3
+2023-06-12 00:48:17,922 INFO : vco_tune_freq_cnt [0x7ff +/-11]: 0x7fe
+2023-06-12 00:48:17,923 INFO : vco_tune_dig_tune: 0x45
+2023-06-12 00:48:17,925 INFO : vco_tune_ibias: 0x19
+2023-06-12 00:48:17,927 INFO : VCO tune OK.
+2023-06-12 00:48:17,963 INFO : Vtune = 1.59215686275 V
+2023-06-12 00:48:17,964 INFO : PLL Set time = 0.0833129882812 seconds.
+2023-06-12 00:48:18,465 INFO :   Loading beambook
+2023-06-12 00:48:18,465 WARNING: [1m[33mMultiple compatible beambooks found
+2023-06-12 00:48:18,466 WARNING: [1m[33mSelecting first beambook
+2023-06-12 00:48:18,466 INFO : Selected beambook for frequency 62640 MHz
+2023-06-12 00:48:18,961 INFO :   TX Initialised
+2023-06-12 00:48:18,971 INFO :   TX Setup completed (without DCO calibration)
+2023-06-12 00:48:18,972 INFO : 
+2023-06-12 00:48:18,972 INFO :   Softswitch settings
+2023-06-12 00:48:18,972 INFO :     State:                    0     1     2     3     4     5     6     7 
+2023-06-12 00:48:18,972 INFO :     trx_soft_rx_on_enables:  0x14  0x14  0x14  0x14  0x1E  0x1E  0x1E  0x1E
+2023-06-12 00:48:18,973 INFO :     trx_soft_tx_on_enables:  0x06  0x06  0x16  0x16  0x16  0x1E  0x1E  0x1E
+2023-06-12 00:48:18,973 INFO :     max_state: 7
+2023-06-12 00:48:18,975 INFO :     delay: 0.015us   2 cycles
+2023-06-12 00:48:18,975 INFO :     bf_on_grp_sel: 0x12345678
+2023-06-12 00:48:18,976 INFO : 
+2023-06-12 00:48:18,991 INFO :   Checking if settings-file ".json" exists.
+2023-06-12 00:48:18,991 WARNING:     [1m[33mNo settings-file exist.
+2023-06-12 00:48:18,991 INFO :   Using normal setup.
+2023-06-12 00:48:18,997 INFO :   TX setup complete
+2023-06-12 00:48:19,011 INFO :   TX enabled
+2023-06-12 00:49:49,083 DEBUG: None
+2023-06-12 00:49:49,084 DEBUG: **** New session started on Mon Jun 12 00:48:14 2023
+2023-06-12 00:49:49,084 DEBUG: **** New session started on Mon Jun 12 00:49:49 2023
+2023-06-12 00:49:49,084 INFO :   EVK SW Version  20220406_1715
+2023-06-12 00:49:49,360 INFO :   [1mChip type Eder B MMF detected.
+2023-06-12 00:49:49,360 INFO :   [1mchip_type: Eder B MMF
+2023-06-12 00:49:49,367 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 00:49:49,368 INFO :   Chip REF already initialized.
+2023-06-12 00:49:49,384 INFO :   Chip ADC init.
+2023-06-12 00:49:50,559 INFO :   temp_calib_offset: -9.25
+2023-06-12 00:49:50,559 INFO :   [1mrfm_type: BFM06010
+2023-06-12 00:49:51,524 INFO :   Chip present (chip_id = 0x02741812).
+2023-06-12 00:49:51,614 INFO :   RX Reset
+2023-06-12 00:49:51,640 INFO :   TX Reset
+2023-06-12 00:49:51,782 INFO :   Chip reset.
+2023-06-12 00:49:51,796 INFO :   Chip VCO init.
+2023-06-12 00:49:51,808 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 00:49:51,808 INFO :   Chip REF init.
+2023-06-12 00:49:51,830 INFO :   Chip ADC init.
+2023-06-12 00:49:51,836 INFO :   Chip TEMP init.
+2023-06-12 00:49:52,378 INFO :   Chip PLL init
+2023-06-12 00:49:52,378 INFO : Setting frequency to 62.64 GHz
+2023-06-12 00:49:52,402 INFO : Temperature: 49.277 C
+2023-06-12 00:49:52,402 INFO : vco_vtune_atc_lo_th: 0x92 (1.603 V)
+2023-06-12 00:49:52,404 INFO : vco_tune_ctrl: 0x4
+2023-06-12 00:49:52,420 INFO : vco_tune_status [0x7e]: 0x7e
+2023-06-12 00:49:52,420 INFO : vco_tune_det_status[0] [1]: 0x3
+2023-06-12 00:49:52,421 INFO : vco_tune_freq_cnt [0x7ff +/-11]: 0x7ff
+2023-06-12 00:49:52,422 INFO : vco_tune_dig_tune: 0x45
+2023-06-12 00:49:52,424 INFO : vco_tune_ibias: 0x19
+2023-06-12 00:49:52,426 INFO : VCO tune OK.
+2023-06-12 00:49:52,462 INFO : Vtune = 1.59215686275 V
+2023-06-12 00:49:52,462 INFO : PLL Set time = 0.0833048820496 seconds.
+2023-06-12 00:49:52,963 INFO :   Loading beambook
+2023-06-12 00:49:52,964 WARNING: [1m[33mMultiple compatible beambooks found
+2023-06-12 00:49:52,964 WARNING: [1m[33mSelecting first beambook
+2023-06-12 00:49:52,965 INFO : Selected beambook for frequency 62640 MHz
+2023-06-12 00:49:53,459 INFO :   TX Initialised
+2023-06-12 00:49:53,469 INFO :   TX Setup completed (without DCO calibration)
+2023-06-12 00:49:53,469 INFO : 
+2023-06-12 00:49:53,470 INFO :   Softswitch settings
+2023-06-12 00:49:53,470 INFO :     State:                    0     1     2     3     4     5     6     7 
+2023-06-12 00:49:53,471 INFO :     trx_soft_rx_on_enables:  0x14  0x14  0x14  0x14  0x1E  0x1E  0x1E  0x1E
+2023-06-12 00:49:53,471 INFO :     trx_soft_tx_on_enables:  0x06  0x06  0x16  0x16  0x16  0x1E  0x1E  0x1E
+2023-06-12 00:49:53,472 INFO :     max_state: 7
+2023-06-12 00:49:53,475 INFO :     delay: 0.015us   2 cycles
+2023-06-12 00:49:53,475 INFO :     bf_on_grp_sel: 0x12345678
+2023-06-12 00:49:53,476 INFO : 
+2023-06-12 00:49:53,492 INFO :   Checking if settings-file ".json" exists.
+2023-06-12 00:49:53,492 WARNING:     [1m[33mNo settings-file exist.
+2023-06-12 00:49:53,493 INFO :   Using normal setup.
+2023-06-12 00:49:53,499 INFO :   TX setup complete
+2023-06-12 00:49:53,513 INFO :   TX enabled
+2023-06-12 00:50:30,372 DEBUG: None
+2023-06-12 00:50:30,372 DEBUG: **** New session started on Mon Jun 12 00:48:14 2023
+2023-06-12 00:50:30,373 DEBUG: **** New session started on Mon Jun 12 00:49:49 2023
+2023-06-12 00:50:30,373 DEBUG: **** New session started on Mon Jun 12 00:50:30 2023
+2023-06-12 00:50:30,373 INFO :   EVK SW Version  20220406_1715
+2023-06-12 00:50:30,649 INFO :   [1mChip type Eder B MMF detected.
+2023-06-12 00:50:30,649 INFO :   [1mchip_type: Eder B MMF
+2023-06-12 00:50:30,656 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 00:50:30,657 INFO :   Chip REF already initialized.
+2023-06-12 00:50:30,673 INFO :   Chip ADC init.
+2023-06-12 00:50:31,869 INFO :   temp_calib_offset: -9.25
+2023-06-12 00:50:31,869 INFO :   [1mrfm_type: BFM06010
+2023-06-12 00:50:32,827 INFO :   Chip present (chip_id = 0x02741812).
+2023-06-12 00:50:32,917 INFO :   RX Reset
+2023-06-12 00:50:32,943 INFO :   TX Reset
+2023-06-12 00:50:33,085 INFO :   Chip reset.
+2023-06-12 00:50:33,099 INFO :   Chip VCO init.
+2023-06-12 00:50:33,111 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 00:50:33,111 INFO :   Chip REF init.
+2023-06-12 00:50:33,133 INFO :   Chip ADC init.
+2023-06-12 00:50:33,139 INFO :   Chip TEMP init.
+2023-06-12 00:50:33,681 INFO :   Chip PLL init
+2023-06-12 00:50:33,682 INFO : Setting frequency to 62.64 GHz
+2023-06-12 00:50:33,705 INFO : Temperature: 49.036 C
+2023-06-12 00:50:33,706 INFO : vco_vtune_atc_lo_th: 0x92 (1.603 V)
+2023-06-12 00:50:33,707 INFO : vco_tune_ctrl: 0x4
+2023-06-12 00:50:33,723 INFO : vco_tune_status [0x7e]: 0x7e
+2023-06-12 00:50:33,723 INFO : vco_tune_det_status[0] [1]: 0x3
+2023-06-12 00:50:33,724 INFO : vco_tune_freq_cnt [0x7ff +/-11]: 0x7ff
+2023-06-12 00:50:33,725 INFO : vco_tune_dig_tune: 0x45
+2023-06-12 00:50:33,727 INFO : vco_tune_ibias: 0x19
+2023-06-12 00:50:33,729 INFO : VCO tune OK.
+2023-06-12 00:50:33,765 INFO : Vtune = 1.6031372549 V
+2023-06-12 00:50:33,766 INFO : PLL Set time = 0.0835239887238 seconds.
+2023-06-12 00:50:34,267 INFO :   Loading beambook
+2023-06-12 00:50:34,267 WARNING: [1m[33mMultiple compatible beambooks found
+2023-06-12 00:50:34,268 WARNING: [1m[33mSelecting first beambook
+2023-06-12 00:50:34,269 INFO : Selected beambook for frequency 62640 MHz
+2023-06-12 00:50:34,779 INFO :   TX Initialised
+2023-06-12 00:50:34,789 INFO :   TX Setup completed (without DCO calibration)
+2023-06-12 00:50:34,789 INFO : 
+2023-06-12 00:50:34,790 INFO :   Softswitch settings
+2023-06-12 00:50:34,790 INFO :     State:                    0     1     2     3     4     5     6     7 
+2023-06-12 00:50:34,790 INFO :     trx_soft_rx_on_enables:  0x14  0x14  0x14  0x14  0x1E  0x1E  0x1E  0x1E
+2023-06-12 00:50:34,790 INFO :     trx_soft_tx_on_enables:  0x06  0x06  0x16  0x16  0x16  0x1E  0x1E  0x1E
+2023-06-12 00:50:34,791 INFO :     max_state: 7
+2023-06-12 00:50:34,793 INFO :     delay: 0.015us   2 cycles
+2023-06-12 00:50:34,793 INFO :     bf_on_grp_sel: 0x12345678
+2023-06-12 00:50:34,793 INFO : 
+2023-06-12 00:50:34,809 INFO :   Checking if settings-file ".json" exists.
+2023-06-12 00:50:34,809 WARNING:     [1m[33mNo settings-file exist.
+2023-06-12 00:50:34,809 INFO :   Using normal setup.
+2023-06-12 00:50:34,815 INFO :   TX setup complete
+2023-06-12 00:50:34,829 INFO :   TX enabled
+2023-06-12 00:53:05,954 DEBUG: None
+2023-06-12 00:53:05,955 DEBUG: **** New session started on Mon Jun 12 00:48:14 2023
+2023-06-12 00:53:05,955 DEBUG: **** New session started on Mon Jun 12 00:49:49 2023
+2023-06-12 00:53:05,955 DEBUG: **** New session started on Mon Jun 12 00:50:30 2023
+2023-06-12 00:53:05,955 DEBUG: **** New session started on Mon Jun 12 00:53:05 2023
+2023-06-12 00:53:05,955 INFO :   EVK SW Version  20220406_1715
+2023-06-12 00:53:06,230 INFO :   [1mChip type Eder B MMF detected.
+2023-06-12 00:53:06,230 INFO :   [1mchip_type: Eder B MMF
+2023-06-12 00:53:06,239 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 00:53:06,240 INFO :   Chip REF already initialized.
+2023-06-12 00:53:06,256 INFO :   Chip ADC init.
+2023-06-12 00:53:07,459 INFO :   temp_calib_offset: -9.25
+2023-06-12 00:53:07,460 INFO :   [1mrfm_type: BFM06010
+2023-06-12 00:53:08,438 INFO :   Chip present (chip_id = 0x02741812).
+2023-06-12 00:53:08,528 INFO :   RX Reset
+2023-06-12 00:53:08,554 INFO :   TX Reset
+2023-06-12 00:53:08,696 INFO :   Chip reset.
+2023-06-12 00:53:08,710 INFO :   Chip VCO init.
+2023-06-12 00:53:08,722 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 00:53:08,722 INFO :   Chip REF init.
+2023-06-12 00:53:08,744 INFO :   Chip ADC init.
+2023-06-12 00:53:08,750 INFO :   Chip TEMP init.
+2023-06-12 00:53:09,292 INFO :   Chip PLL init
+2023-06-12 00:53:09,293 INFO : Setting frequency to 62.64 GHz
+2023-06-12 00:53:09,318 INFO : Temperature: 49.277 C
+2023-06-12 00:53:09,319 INFO : vco_vtune_atc_lo_th: 0x92 (1.603 V)
+2023-06-12 00:53:09,322 INFO : vco_tune_ctrl: 0x4
+2023-06-12 00:53:09,338 INFO : vco_tune_status [0x7e]: 0x7e
+2023-06-12 00:53:09,338 INFO : vco_tune_det_status[0] [1]: 0x3
+2023-06-12 00:53:09,338 INFO : vco_tune_freq_cnt [0x7ff +/-11]: 0x7ff
+2023-06-12 00:53:09,340 INFO : vco_tune_dig_tune: 0x45
+2023-06-12 00:53:09,342 INFO : vco_tune_ibias: 0x19
+2023-06-12 00:53:09,344 INFO : VCO tune OK.
+2023-06-12 00:53:09,380 INFO : Vtune = 1.59215686275 V
+2023-06-12 00:53:09,380 INFO : PLL Set time = 0.0861060619354 seconds.
+2023-06-12 00:53:09,881 INFO :   Loading beambook
+2023-06-12 00:53:09,882 WARNING: [1m[33mMultiple compatible beambooks found
+2023-06-12 00:53:09,882 WARNING: [1m[33mSelecting first beambook
+2023-06-12 00:53:09,883 INFO : Selected beambook for frequency 62640 MHz
+2023-06-12 00:53:10,379 INFO :   TX Initialised
+2023-06-12 00:53:10,389 INFO :   TX Setup completed (without DCO calibration)
+2023-06-12 00:53:10,389 INFO : 
+2023-06-12 00:53:10,389 INFO :   Softswitch settings
+2023-06-12 00:53:10,389 INFO :     State:                    0     1     2     3     4     5     6     7 
+2023-06-12 00:53:10,390 INFO :     trx_soft_rx_on_enables:  0x14  0x14  0x14  0x14  0x1E  0x1E  0x1E  0x1E
+2023-06-12 00:53:10,390 INFO :     trx_soft_tx_on_enables:  0x06  0x06  0x16  0x16  0x16  0x1E  0x1E  0x1E
+2023-06-12 00:53:10,390 INFO :     max_state: 7
+2023-06-12 00:53:10,392 INFO :     delay: 0.015us   2 cycles
+2023-06-12 00:53:10,393 INFO :     bf_on_grp_sel: 0x12345678
+2023-06-12 00:53:10,393 INFO : 
+2023-06-12 00:53:10,408 INFO :   Checking if settings-file ".json" exists.
+2023-06-12 00:53:10,409 WARNING:     [1m[33mNo settings-file exist.
+2023-06-12 00:53:10,409 INFO :   Using normal setup.
+2023-06-12 00:53:10,415 INFO :   TX setup complete
+2023-06-12 00:53:10,429 INFO :   TX enabled
+2023-06-12 00:55:37,317 DEBUG: None
+2023-06-12 00:55:37,318 DEBUG: **** New session started on Mon Jun 12 00:48:14 2023
+2023-06-12 00:55:37,318 DEBUG: **** New session started on Mon Jun 12 00:49:49 2023
+2023-06-12 00:55:37,318 DEBUG: **** New session started on Mon Jun 12 00:50:30 2023
+2023-06-12 00:55:37,318 DEBUG: **** New session started on Mon Jun 12 00:53:05 2023
+2023-06-12 00:55:37,318 DEBUG: **** New session started on Mon Jun 12 00:55:37 2023
+2023-06-12 00:55:37,319 INFO :   EVK SW Version  20220406_1715
+2023-06-12 00:55:42,378 DEBUG: None
+2023-06-12 00:55:42,378 DEBUG: **** New session started on Mon Jun 12 00:48:14 2023
+2023-06-12 00:55:42,384 DEBUG: **** New session started on Mon Jun 12 00:49:49 2023
+2023-06-12 00:55:42,384 DEBUG: **** New session started on Mon Jun 12 00:50:30 2023
+2023-06-12 00:55:42,384 DEBUG: **** New session started on Mon Jun 12 00:53:05 2023
+2023-06-12 00:55:42,384 DEBUG: **** New session started on Mon Jun 12 00:55:37 2023
+2023-06-12 00:55:42,384 DEBUG: **** New session started on Mon Jun 12 00:55:42 2023
+2023-06-12 00:55:42,385 INFO :   EVK SW Version  20220406_1715
+2023-06-12 00:56:11,099 DEBUG: None
+2023-06-12 00:56:11,099 DEBUG: **** New session started on Mon Jun 12 00:48:14 2023
+2023-06-12 00:56:11,100 DEBUG: **** New session started on Mon Jun 12 00:49:49 2023
+2023-06-12 00:56:11,100 DEBUG: **** New session started on Mon Jun 12 00:50:30 2023
+2023-06-12 00:56:11,100 DEBUG: **** New session started on Mon Jun 12 00:53:05 2023
+2023-06-12 00:56:11,100 DEBUG: **** New session started on Mon Jun 12 00:55:37 2023
+2023-06-12 00:56:11,100 DEBUG: **** New session started on Mon Jun 12 00:55:42 2023
+2023-06-12 00:56:11,100 DEBUG: **** New session started on Mon Jun 12 00:56:11 2023
+2023-06-12 00:56:11,100 INFO :   EVK SW Version  20220406_1715
+2023-06-12 00:56:11,373 INFO :   [1mChip type Eder B MMF detected.
+2023-06-12 00:56:11,375 INFO :   [1mchip_type: Eder B MMF
+2023-06-12 00:56:11,397 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 00:56:11,398 INFO :   Chip REF init.
+2023-06-12 00:56:11,421 INFO :   Chip ADC init.
+2023-06-12 00:56:12,576 INFO :   temp_calib_offset: -9.25
+2023-06-12 00:56:12,577 INFO :   [1mrfm_type: BFM06010
+2023-06-12 00:56:13,533 INFO :   Chip present (chip_id = 0x02741812).
+2023-06-12 00:56:13,623 INFO :   RX Reset
+2023-06-12 00:56:13,649 INFO :   TX Reset
+2023-06-12 00:56:13,791 INFO :   Chip reset.
+2023-06-12 00:56:13,805 INFO :   Chip VCO init.
+2023-06-12 00:56:13,817 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 00:56:13,817 INFO :   Chip REF init.
+2023-06-12 00:56:13,839 INFO :   Chip ADC init.
+2023-06-12 00:56:13,845 INFO :   Chip TEMP init.
+2023-06-12 00:56:14,387 INFO :   Chip PLL init
+2023-06-12 00:56:14,388 INFO : Setting frequency to 62.64 GHz
+2023-06-12 00:56:14,411 INFO : Temperature: 42.517 C
+2023-06-12 00:56:14,412 INFO : vco_vtune_atc_lo_th: 0x8d (1.548 V)
+2023-06-12 00:56:14,413 INFO : vco_tune_ctrl: 0x4
+2023-06-12 00:56:14,429 INFO : vco_tune_status [0x7e]: 0x7e
+2023-06-12 00:56:14,429 INFO : vco_tune_det_status[0] [1]: 0x3
+2023-06-12 00:56:14,430 INFO : vco_tune_freq_cnt [0x7ff +/-11]: 0x800
+2023-06-12 00:56:14,431 INFO : vco_tune_dig_tune: 0x45
+2023-06-12 00:56:14,433 INFO : vco_tune_ibias: 0x19
+2023-06-12 00:56:14,435 INFO : VCO tune OK.
+2023-06-12 00:56:14,473 INFO : Vtune = 1.42745098039 V
+2023-06-12 00:56:14,474 INFO : PLL Set time = 0.0854239463806 seconds.
+2023-06-12 00:56:14,975 INFO :   Loading beambook
+2023-06-12 00:56:14,976 WARNING: [1m[33mMultiple compatible beambooks found
+2023-06-12 00:56:14,976 WARNING: [1m[33mSelecting first beambook
+2023-06-12 00:56:14,977 INFO : Selected beambook for frequency 62640 MHz
+2023-06-12 00:57:05,647 DEBUG: None
+2023-06-12 00:57:05,648 DEBUG: **** New session started on Mon Jun 12 00:48:14 2023
+2023-06-12 00:57:05,648 DEBUG: **** New session started on Mon Jun 12 00:49:49 2023
+2023-06-12 00:57:05,648 DEBUG: **** New session started on Mon Jun 12 00:50:30 2023
+2023-06-12 00:57:05,648 DEBUG: **** New session started on Mon Jun 12 00:53:05 2023
+2023-06-12 00:57:05,648 DEBUG: **** New session started on Mon Jun 12 00:55:37 2023
+2023-06-12 00:57:05,648 DEBUG: **** New session started on Mon Jun 12 00:55:42 2023
+2023-06-12 00:57:05,648 DEBUG: **** New session started on Mon Jun 12 00:57:05 2023
+2023-06-12 00:57:05,649 INFO :   EVK SW Version  20220406_1715
+2023-06-12 00:57:05,923 INFO :   [1mChip type Eder B MMF detected.
+2023-06-12 00:57:05,923 INFO :   [1mchip_type: Eder B MMF
+2023-06-12 00:57:05,930 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 00:57:05,931 INFO :   Chip REF already initialized.
+2023-06-12 00:57:05,947 INFO :   Chip ADC init.
+2023-06-12 00:57:07,018 INFO :   temp_calib_offset: -9.25
+2023-06-12 00:57:07,019 INFO :   [1mrfm_type: BFM06010
+2023-06-12 00:57:07,963 INFO :   Chip present (chip_id = 0x02741812).
+2023-06-12 00:57:08,053 INFO :   RX Reset
+2023-06-12 00:57:08,079 INFO :   TX Reset
+2023-06-12 00:57:08,221 INFO :   Chip reset.
+2023-06-12 00:57:08,235 INFO :   Chip VCO init.
+2023-06-12 00:57:08,247 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 00:57:08,247 INFO :   Chip REF init.
+2023-06-12 00:57:08,269 INFO :   Chip ADC init.
+2023-06-12 00:57:08,275 INFO :   Chip TEMP init.
+2023-06-12 00:57:08,817 INFO :   Chip PLL init
+2023-06-12 00:57:08,818 INFO : Setting frequency to 62.64 GHz
+2023-06-12 00:57:08,843 INFO : Temperature: 39.861 C
+2023-06-12 00:57:08,844 INFO : vco_vtune_atc_lo_th: 0x8a (1.515 V)
+2023-06-12 00:57:08,845 INFO : vco_tune_ctrl: 0x4
+2023-06-12 00:57:08,861 INFO : vco_tune_status [0x7e]: 0x7e
+2023-06-12 00:57:08,861 INFO : vco_tune_det_status[0] [1]: 0x3
+2023-06-12 00:57:08,862 INFO : vco_tune_freq_cnt [0x7ff +/-11]: 0x801
+2023-06-12 00:57:08,865 INFO : vco_tune_dig_tune: 0x45
+2023-06-12 00:57:08,867 INFO : vco_tune_ibias: 0x19
+2023-06-12 00:57:08,869 INFO : VCO tune OK.
+2023-06-12 00:57:08,905 INFO : Vtune = 1.38352941176 V
+2023-06-12 00:57:08,906 INFO : PLL Set time = 0.0873339176178 seconds.
+2023-06-12 00:57:09,407 INFO :   Loading beambook
+2023-06-12 00:57:09,407 WARNING: [1m[33mMultiple compatible beambooks found
+2023-06-12 00:57:09,408 WARNING: [1m[33mSelecting first beambook
+2023-06-12 00:57:09,409 INFO : Selected beambook for frequency 62640 MHz
+2023-06-12 00:57:09,888 INFO :   TX Initialised
+2023-06-12 00:57:09,898 INFO :   TX Setup completed (without DCO calibration)
+2023-06-12 00:57:09,898 INFO : 
+2023-06-12 00:57:09,898 INFO :   Softswitch settings
+2023-06-12 00:57:09,899 INFO :     State:                    0     1     2     3     4     5     6     7 
+2023-06-12 00:57:09,899 INFO :     trx_soft_rx_on_enables:  0x14  0x14  0x14  0x14  0x1E  0x1E  0x1E  0x1E
+2023-06-12 00:57:09,899 INFO :     trx_soft_tx_on_enables:  0x06  0x06  0x16  0x16  0x16  0x1E  0x1E  0x1E
+2023-06-12 00:57:09,899 INFO :     max_state: 7
+2023-06-12 00:57:09,901 INFO :     delay: 0.015us   2 cycles
+2023-06-12 00:57:09,902 INFO :     bf_on_grp_sel: 0x12345678
+2023-06-12 00:57:09,902 INFO : 
+2023-06-12 00:57:09,917 INFO :   Checking if settings-file ".json" exists.
+2023-06-12 00:57:09,918 WARNING:     [1m[33mNo settings-file exist.
+2023-06-12 00:57:09,918 INFO :   Using normal setup.
+2023-06-12 00:57:09,924 INFO :   TX setup complete
+2023-06-12 00:57:09,938 INFO :   TX enabled
+2023-06-12 00:58:09,311 DEBUG: None
+2023-06-12 00:58:09,312 DEBUG: **** New session started on Mon Jun 12 00:48:14 2023
+2023-06-12 00:58:09,312 DEBUG: **** New session started on Mon Jun 12 00:49:49 2023
+2023-06-12 00:58:09,312 DEBUG: **** New session started on Mon Jun 12 00:50:30 2023
+2023-06-12 00:58:09,312 DEBUG: **** New session started on Mon Jun 12 00:53:05 2023
+2023-06-12 00:58:09,312 DEBUG: **** New session started on Mon Jun 12 00:55:37 2023
+2023-06-12 00:58:09,312 DEBUG: **** New session started on Mon Jun 12 00:55:42 2023
+2023-06-12 00:58:09,312 DEBUG: **** New session started on Mon Jun 12 00:57:05 2023
+2023-06-12 00:58:09,312 DEBUG: **** New session started on Mon Jun 12 00:58:09 2023
+2023-06-12 00:58:09,313 INFO :   EVK SW Version  20220406_1715
+2023-06-12 00:58:09,585 INFO :   [1mChip type Eder B MMF detected.
+2023-06-12 00:58:09,586 INFO :   [1mchip_type: Eder B MMF
+2023-06-12 00:58:09,593 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 00:58:09,593 INFO :   Chip REF already initialized.
+2023-06-12 00:58:09,609 INFO :   Chip ADC init.
+2023-06-12 00:58:10,804 INFO :   temp_calib_offset: -9.25
+2023-06-12 00:58:10,805 INFO :   [1mrfm_type: BFM06010
+2023-06-12 00:58:11,779 INFO :   Chip present (chip_id = 0x02741812).
+2023-06-12 00:58:11,869 INFO :   RX Reset
+2023-06-12 00:58:11,895 INFO :   TX Reset
+2023-06-12 00:58:12,038 INFO :   Chip reset.
+2023-06-12 00:58:12,051 INFO :   Chip VCO init.
+2023-06-12 00:58:12,063 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 00:58:12,064 INFO :   Chip REF init.
+2023-06-12 00:58:12,085 INFO :   Chip ADC init.
+2023-06-12 00:58:12,091 INFO :   Chip TEMP init.
+2023-06-12 00:58:12,634 INFO :   Chip PLL init
+2023-06-12 00:58:12,634 INFO : Setting frequency to 62.64 GHz
+2023-06-12 00:58:12,660 INFO : Temperature: 45.656 C
+2023-06-12 00:58:12,660 INFO : vco_vtune_atc_lo_th: 0x8f (1.570 V)
+2023-06-12 00:58:12,663 INFO : vco_tune_ctrl: 0x4
+2023-06-12 00:58:12,679 INFO : vco_tune_status [0x7e]: 0x7e
+2023-06-12 00:58:12,680 INFO : vco_tune_det_status[0] [1]: 0x3
+2023-06-12 00:58:12,680 INFO : vco_tune_freq_cnt [0x7ff +/-11]: 0x800
+2023-06-12 00:58:12,683 INFO : vco_tune_dig_tune: 0x45
+2023-06-12 00:58:12,685 INFO : vco_tune_ibias: 0x19
+2023-06-12 00:58:12,687 INFO : VCO tune OK.
+2023-06-12 00:58:12,723 INFO : Vtune = 1.50431372549 V
+2023-06-12 00:58:12,724 INFO : PLL Set time = 0.0891199111938 seconds.
+2023-06-12 00:58:13,225 INFO :   Loading beambook
+2023-06-12 00:58:13,226 WARNING: [1m[33mMultiple compatible beambooks found
+2023-06-12 00:58:13,226 WARNING: [1m[33mSelecting first beambook
+2023-06-12 00:58:13,227 INFO : Selected beambook for frequency 62640 MHz
+2023-06-12 00:58:13,717 INFO :   TX Initialised
+2023-06-12 00:58:13,727 INFO :   TX Setup completed (without DCO calibration)
+2023-06-12 00:58:13,728 INFO : 
+2023-06-12 00:58:13,728 INFO :   Softswitch settings
+2023-06-12 00:58:13,728 INFO :     State:                    0     1     2     3     4     5     6     7 
+2023-06-12 00:58:13,729 INFO :     trx_soft_rx_on_enables:  0x14  0x14  0x14  0x14  0x1E  0x1E  0x1E  0x1E
+2023-06-12 00:58:13,729 INFO :     trx_soft_tx_on_enables:  0x06  0x06  0x16  0x16  0x16  0x1E  0x1E  0x1E
+2023-06-12 00:58:13,729 INFO :     max_state: 7
+2023-06-12 00:58:13,731 INFO :     delay: 0.015us   2 cycles
+2023-06-12 00:58:13,731 INFO :     bf_on_grp_sel: 0x12345678
+2023-06-12 00:58:13,732 INFO : 
+2023-06-12 00:58:13,747 INFO :   Checking if settings-file ".json" exists.
+2023-06-12 00:58:13,747 WARNING:     [1m[33mNo settings-file exist.
+2023-06-12 00:58:13,748 INFO :   Using normal setup.
+2023-06-12 00:58:13,753 INFO :   TX setup complete
+2023-06-12 00:58:13,767 INFO :   TX enabled
+2023-06-12 01:02:26,999 DEBUG: None
+2023-06-12 01:02:26,999 DEBUG: **** New session started on Mon Jun 12 00:48:14 2023
+2023-06-12 01:02:26,999 DEBUG: **** New session started on Mon Jun 12 00:49:49 2023
+2023-06-12 01:02:27,000 DEBUG: **** New session started on Mon Jun 12 00:50:30 2023
+2023-06-12 01:02:27,000 DEBUG: **** New session started on Mon Jun 12 00:53:05 2023
+2023-06-12 01:02:27,000 DEBUG: **** New session started on Mon Jun 12 00:55:37 2023
+2023-06-12 01:02:27,000 DEBUG: **** New session started on Mon Jun 12 00:55:42 2023
+2023-06-12 01:02:27,000 DEBUG: **** New session started on Mon Jun 12 00:57:05 2023
+2023-06-12 01:02:27,000 DEBUG: **** New session started on Mon Jun 12 00:58:09 2023
+2023-06-12 01:02:27,000 DEBUG: **** New session started on Mon Jun 12 01:02:26 2023
+2023-06-12 01:02:27,000 INFO :   EVK SW Version  20220406_1715
+2023-06-12 01:02:27,275 INFO :   [1mChip type Eder B MMF detected.
+2023-06-12 01:02:27,275 INFO :   [1mchip_type: Eder B MMF
+2023-06-12 01:02:27,282 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 01:02:27,283 INFO :   Chip REF already initialized.
+2023-06-12 01:02:27,299 INFO :   Chip ADC init.
+2023-06-12 01:02:28,451 INFO :   temp_calib_offset: -9.25
+2023-06-12 01:02:28,452 INFO :   [1mrfm_type: BFM06010
+2023-06-12 01:02:29,447 INFO :   Chip present (chip_id = 0x02741812).
+2023-06-12 01:02:29,537 INFO :   RX Reset
+2023-06-12 01:02:29,563 INFO :   TX Reset
+2023-06-12 01:02:29,705 INFO :   Chip reset.
+2023-06-12 01:02:29,719 INFO :   Chip VCO init.
+2023-06-12 01:02:29,731 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 01:02:29,731 INFO :   Chip REF init.
+2023-06-12 01:02:29,753 INFO :   Chip ADC init.
+2023-06-12 01:02:29,759 INFO :   Chip TEMP init.
+2023-06-12 01:02:30,301 INFO :   Chip PLL init
+2023-06-12 01:02:30,302 INFO : Setting frequency to 62.64 GHz
+2023-06-12 01:02:30,325 INFO : Temperature: 47.829 C
+2023-06-12 01:02:30,326 INFO : vco_vtune_atc_lo_th: 0x91 (1.592 V)
+2023-06-12 01:02:30,327 INFO : vco_tune_ctrl: 0x4
+2023-06-12 01:02:30,343 INFO : vco_tune_status [0x7e]: 0x7e
+2023-06-12 01:02:30,343 INFO : vco_tune_det_status[0] [1]: 0x3
+2023-06-12 01:02:30,344 INFO : vco_tune_freq_cnt [0x7ff +/-11]: 0x7ff
+2023-06-12 01:02:30,345 INFO : vco_tune_dig_tune: 0x45
+2023-06-12 01:02:30,347 INFO : vco_tune_ibias: 0x19
+2023-06-12 01:02:30,349 INFO : VCO tune OK.
+2023-06-12 01:02:30,385 INFO : Vtune = 1.55921568627 V
+2023-06-12 01:02:30,386 INFO : PLL Set time = 0.0833430290222 seconds.
+2023-06-12 01:02:30,887 INFO :   Loading beambook
+2023-06-12 01:02:30,887 WARNING: [1m[33mMultiple compatible beambooks found
+2023-06-12 01:02:30,888 WARNING: [1m[33mSelecting first beambook
+2023-06-12 01:02:30,888 INFO : Selected beambook for frequency 62640 MHz
+2023-06-12 01:03:21,523 DEBUG: None
+2023-06-12 01:03:21,524 DEBUG: **** New session started on Mon Jun 12 00:48:14 2023
+2023-06-12 01:03:21,524 DEBUG: **** New session started on Mon Jun 12 00:49:49 2023
+2023-06-12 01:03:21,524 DEBUG: **** New session started on Mon Jun 12 00:50:30 2023
+2023-06-12 01:03:21,524 DEBUG: **** New session started on Mon Jun 12 00:53:05 2023
+2023-06-12 01:03:21,524 DEBUG: **** New session started on Mon Jun 12 00:55:37 2023
+2023-06-12 01:03:21,524 DEBUG: **** New session started on Mon Jun 12 00:55:42 2023
+2023-06-12 01:03:21,524 DEBUG: **** New session started on Mon Jun 12 00:57:05 2023
+2023-06-12 01:03:21,524 DEBUG: **** New session started on Mon Jun 12 00:58:09 2023
+2023-06-12 01:03:21,525 DEBUG: **** New session started on Mon Jun 12 01:03:21 2023
+2023-06-12 01:03:21,525 INFO :   EVK SW Version  20220406_1715
+2023-06-12 01:03:21,801 INFO :   [1mChip type Eder B MMF detected.
+2023-06-12 01:03:21,801 INFO :   [1mchip_type: Eder B MMF
+2023-06-12 01:03:21,808 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 01:03:21,809 INFO :   Chip REF already initialized.
+2023-06-12 01:03:21,825 INFO :   Chip ADC init.
+2023-06-12 01:03:22,955 INFO :   temp_calib_offset: -9.25
+2023-06-12 01:03:22,955 INFO :   [1mrfm_type: BFM06010
+2023-06-12 01:03:23,865 INFO :   Chip present (chip_id = 0x02741812).
+2023-06-12 01:03:23,955 INFO :   RX Reset
+2023-06-12 01:03:23,981 INFO :   TX Reset
+2023-06-12 01:03:24,123 INFO :   Chip reset.
+2023-06-12 01:03:24,137 INFO :   Chip VCO init.
+2023-06-12 01:03:24,149 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 01:03:24,149 INFO :   Chip REF init.
+2023-06-12 01:03:24,171 INFO :   Chip ADC init.
+2023-06-12 01:03:24,177 INFO :   Chip TEMP init.
+2023-06-12 01:03:24,719 INFO :   Chip PLL init
+2023-06-12 01:03:24,720 INFO : Setting frequency to 62.64 GHz
+2023-06-12 01:03:24,743 INFO : Temperature: 40.827 C
+2023-06-12 01:03:24,744 INFO : vco_vtune_atc_lo_th: 0x8b (1.526 V)
+2023-06-12 01:03:24,745 INFO : vco_tune_ctrl: 0x4
+2023-06-12 01:03:24,761 INFO : vco_tune_status [0x7e]: 0x7e
+2023-06-12 01:03:24,761 INFO : vco_tune_det_status[0] [1]: 0x3
+2023-06-12 01:03:24,762 INFO : vco_tune_freq_cnt [0x7ff +/-11]: 0x800
+2023-06-12 01:03:24,765 INFO : vco_tune_dig_tune: 0x45
+2023-06-12 01:03:24,767 INFO : vco_tune_ibias: 0x18
+2023-06-12 01:03:24,769 INFO : VCO tune OK.
+2023-06-12 01:03:24,805 INFO : Vtune = 1.39450980392 V
+2023-06-12 01:03:24,806 INFO : PLL Set time = 0.0853841304779 seconds.
+2023-06-12 01:03:25,307 INFO :   Loading beambook
+2023-06-12 01:03:25,307 WARNING: [1m[33mMultiple compatible beambooks found
+2023-06-12 01:03:25,308 WARNING: [1m[33mSelecting first beambook
+2023-06-12 01:03:25,308 INFO : Selected beambook for frequency 62640 MHz
+2023-06-12 01:03:25,809 INFO :   TX Initialised
+2023-06-12 01:03:25,819 INFO :   TX Setup completed (without DCO calibration)
+2023-06-12 01:03:25,819 INFO : 
+2023-06-12 01:03:25,819 INFO :   Softswitch settings
+2023-06-12 01:03:25,820 INFO :     State:                    0     1     2     3     4     5     6     7 
+2023-06-12 01:03:25,820 INFO :     trx_soft_rx_on_enables:  0x14  0x14  0x14  0x14  0x1E  0x1E  0x1E  0x1E
+2023-06-12 01:03:25,820 INFO :     trx_soft_tx_on_enables:  0x06  0x06  0x16  0x16  0x16  0x1E  0x1E  0x1E
+2023-06-12 01:03:25,820 INFO :     max_state: 7
+2023-06-12 01:03:25,822 INFO :     delay: 0.015us   2 cycles
+2023-06-12 01:03:25,823 INFO :     bf_on_grp_sel: 0x12345678
+2023-06-12 01:03:25,823 INFO : 
+2023-06-12 01:03:25,838 INFO :   Checking if settings-file ".json" exists.
+2023-06-12 01:03:25,839 WARNING:     [1m[33mNo settings-file exist.
+2023-06-12 01:03:25,839 INFO :   Using normal setup.
+2023-06-12 01:03:25,845 INFO :   TX setup complete
+2023-06-12 01:03:25,859 INFO :   TX enabled
+2023-06-12 01:07:23,595 DEBUG: None
+2023-06-12 01:07:23,596 DEBUG: **** New session started on Mon Jun 12 00:48:14 2023
+2023-06-12 01:07:23,596 DEBUG: **** New session started on Mon Jun 12 00:49:49 2023
+2023-06-12 01:07:23,596 DEBUG: **** New session started on Mon Jun 12 00:50:30 2023
+2023-06-12 01:07:23,596 DEBUG: **** New session started on Mon Jun 12 00:53:05 2023
+2023-06-12 01:07:23,596 DEBUG: **** New session started on Mon Jun 12 00:55:37 2023
+2023-06-12 01:07:23,596 DEBUG: **** New session started on Mon Jun 12 00:55:42 2023
+2023-06-12 01:07:23,596 DEBUG: **** New session started on Mon Jun 12 00:57:05 2023
+2023-06-12 01:07:23,596 DEBUG: **** New session started on Mon Jun 12 00:58:09 2023
+2023-06-12 01:07:23,597 DEBUG: **** New session started on Mon Jun 12 01:03:21 2023
+2023-06-12 01:07:23,597 DEBUG: **** New session started on Mon Jun 12 01:07:23 2023
+2023-06-12 01:07:23,597 INFO :   EVK SW Version  20220406_1715
+2023-06-12 01:07:23,871 INFO :   [1mChip type Eder B MMF detected.
+2023-06-12 01:07:23,871 INFO :   [1mchip_type: Eder B MMF
+2023-06-12 01:07:23,878 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 01:07:23,879 INFO :   Chip REF already initialized.
+2023-06-12 01:07:23,895 INFO :   Chip ADC init.
+2023-06-12 01:07:25,047 INFO :   temp_calib_offset: -9.25
+2023-06-12 01:07:25,047 INFO :   [1mrfm_type: BFM06010
+2023-06-12 01:07:26,007 INFO :   Chip present (chip_id = 0x02741812).
+2023-06-12 01:07:26,097 INFO :   RX Reset
+2023-06-12 01:07:26,123 INFO :   TX Reset
+2023-06-12 01:07:26,265 INFO :   Chip reset.
+2023-06-12 01:07:26,279 INFO :   Chip VCO init.
+2023-06-12 01:07:26,291 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 01:07:26,291 INFO :   Chip REF init.
+2023-06-12 01:07:26,313 INFO :   Chip ADC init.
+2023-06-12 01:07:26,319 INFO :   Chip TEMP init.
+2023-06-12 01:07:26,861 INFO :   Chip PLL init
+2023-06-12 01:07:26,862 INFO : Setting frequency to 62.64 GHz
+2023-06-12 01:07:26,885 INFO : Temperature: 47.587 C
+2023-06-12 01:07:26,886 INFO : vco_vtune_atc_lo_th: 0x91 (1.592 V)
+2023-06-12 01:07:26,887 INFO : vco_tune_ctrl: 0x4
+2023-06-12 01:07:26,903 INFO : vco_tune_status [0x7e]: 0x7e
+2023-06-12 01:07:26,903 INFO : vco_tune_det_status[0] [1]: 0x3
+2023-06-12 01:07:26,904 INFO : vco_tune_freq_cnt [0x7ff +/-11]: 0x7ff
+2023-06-12 01:07:26,907 INFO : vco_tune_dig_tune: 0x45
+2023-06-12 01:07:26,909 INFO : vco_tune_ibias: 0x19
+2023-06-12 01:07:26,911 INFO : VCO tune OK.
+2023-06-12 01:07:26,947 INFO : Vtune = 1.55921568627 V
+2023-06-12 01:07:26,948 INFO : PLL Set time = 0.0852918624878 seconds.
+2023-06-12 01:07:27,448 INFO :   Loading beambook
+2023-06-12 01:07:27,450 WARNING: [1m[33mMultiple compatible beambooks found
+2023-06-12 01:07:27,451 WARNING: [1m[33mSelecting first beambook
+2023-06-12 01:07:27,452 INFO : Selected beambook for frequency 62640 MHz
+2023-06-12 01:07:27,950 INFO :   TX Initialised
+2023-06-12 01:07:27,960 INFO :   TX Setup completed (without DCO calibration)
+2023-06-12 01:07:27,960 INFO : 
+2023-06-12 01:07:27,961 INFO :   Softswitch settings
+2023-06-12 01:07:27,961 INFO :     State:                    0     1     2     3     4     5     6     7 
+2023-06-12 01:07:27,962 INFO :     trx_soft_rx_on_enables:  0x14  0x14  0x14  0x14  0x1E  0x1E  0x1E  0x1E
+2023-06-12 01:07:27,963 INFO :     trx_soft_tx_on_enables:  0x06  0x06  0x16  0x16  0x16  0x1E  0x1E  0x1E
+2023-06-12 01:07:27,963 INFO :     max_state: 7
+2023-06-12 01:07:27,966 INFO :     delay: 0.015us   2 cycles
+2023-06-12 01:07:27,966 INFO :     bf_on_grp_sel: 0x12345678
+2023-06-12 01:07:27,967 INFO : 
+2023-06-12 01:07:27,983 INFO :   Checking if settings-file ".json" exists.
+2023-06-12 01:07:27,983 WARNING:     [1m[33mNo settings-file exist.
+2023-06-12 01:07:27,984 INFO :   Using normal setup.
+2023-06-12 01:07:27,990 INFO :   TX setup complete
+2023-06-12 01:07:28,004 INFO :   TX enabled
+2023-06-12 01:09:20,240 DEBUG: None
+2023-06-12 01:09:20,241 DEBUG: **** New session started on Mon Jun 12 00:48:14 2023
+2023-06-12 01:09:20,241 DEBUG: **** New session started on Mon Jun 12 00:49:49 2023
+2023-06-12 01:09:20,241 DEBUG: **** New session started on Mon Jun 12 00:50:30 2023
+2023-06-12 01:09:20,241 DEBUG: **** New session started on Mon Jun 12 00:53:05 2023
+2023-06-12 01:09:20,241 DEBUG: **** New session started on Mon Jun 12 00:55:37 2023
+2023-06-12 01:09:20,241 DEBUG: **** New session started on Mon Jun 12 00:55:42 2023
+2023-06-12 01:09:20,241 DEBUG: **** New session started on Mon Jun 12 00:57:05 2023
+2023-06-12 01:09:20,241 DEBUG: **** New session started on Mon Jun 12 00:58:09 2023
+2023-06-12 01:09:20,241 DEBUG: **** New session started on Mon Jun 12 01:03:21 2023
+2023-06-12 01:09:20,242 DEBUG: **** New session started on Mon Jun 12 01:07:23 2023
+2023-06-12 01:09:20,242 DEBUG: **** New session started on Mon Jun 12 01:09:20 2023
+2023-06-12 01:09:20,242 INFO :   EVK SW Version  20220406_1715
+2023-06-12 01:09:20,516 INFO :   [1mChip type Eder B MMF detected.
+2023-06-12 01:09:20,517 INFO :   [1mchip_type: Eder B MMF
+2023-06-12 01:09:20,524 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 01:09:20,524 INFO :   Chip REF already initialized.
+2023-06-12 01:09:20,540 INFO :   Chip ADC init.
+2023-06-12 01:09:21,770 INFO :   temp_calib_offset: -9.25
+2023-06-12 01:09:21,771 INFO :   [1mrfm_type: BFM06010
+2023-06-12 01:09:22,722 INFO :   Chip present (chip_id = 0x02741812).
+2023-06-12 01:09:22,812 INFO :   RX Reset
+2023-06-12 01:09:22,838 INFO :   TX Reset
+2023-06-12 01:09:22,980 INFO :   Chip reset.
+2023-06-12 01:09:22,994 INFO :   Chip VCO init.
+2023-06-12 01:09:23,006 INFO :   Reference frequency: 45.00 MHz
+2023-06-12 01:09:23,007 INFO :   Chip REF init.
+2023-06-12 01:09:23,028 INFO :   Chip ADC init.
+2023-06-12 01:09:23,034 INFO :   Chip TEMP init.
+2023-06-12 01:09:23,576 INFO :   Chip PLL init
+2023-06-12 01:09:23,577 INFO : Setting frequency to 62.64 GHz
+2023-06-12 01:09:23,601 INFO : Temperature: 44.207 C
+2023-06-12 01:09:23,601 INFO : vco_vtune_atc_lo_th: 0x8e (1.559 V)
+2023-06-12 01:09:23,602 INFO : vco_tune_ctrl: 0x4
+2023-06-12 01:09:23,618 INFO : vco_tune_status [0x7e]: 0x7e
+2023-06-12 01:09:23,619 INFO : vco_tune_det_status[0] [1]: 0x3
+2023-06-12 01:09:23,619 INFO : vco_tune_freq_cnt [0x7ff +/-11]: 0x800
+2023-06-12 01:09:23,620 INFO : vco_tune_dig_tune: 0x45
+2023-06-12 01:09:23,622 INFO : vco_tune_ibias: 0x19
+2023-06-12 01:09:23,624 INFO : VCO tune OK.
+2023-06-12 01:09:23,660 INFO : Vtune = 1.48235294118 V
+2023-06-12 01:09:23,661 INFO : PLL Set time = 0.0835001468658 seconds.
+2023-06-12 01:09:24,162 INFO :   Loading beambook
+2023-06-12 01:09:24,163 WARNING: [1m[33mMultiple compatible beambooks found
+2023-06-12 01:09:24,163 WARNING: [1m[33mSelecting first beambook
+2023-06-12 01:09:24,164 INFO : Selected beambook for frequency 62640 MHz
+2023-06-12 01:09:24,664 INFO :   TX Initialised
+2023-06-12 01:09:24,674 INFO :   TX Setup completed (without DCO calibration)
+2023-06-12 01:09:24,675 INFO : 
+2023-06-12 01:09:24,675 INFO :   Softswitch settings
+2023-06-12 01:09:24,675 INFO :     State:                    0     1     2     3     4     5     6     7 
+2023-06-12 01:09:24,675 INFO :     trx_soft_rx_on_enables:  0x14  0x14  0x14  0x14  0x1E  0x1E  0x1E  0x1E
+2023-06-12 01:09:24,676 INFO :     trx_soft_tx_on_enables:  0x06  0x06  0x16  0x16  0x16  0x1E  0x1E  0x1E
+2023-06-12 01:09:24,676 INFO :     max_state: 7
+2023-06-12 01:09:24,678 INFO :     delay: 0.015us   2 cycles
+2023-06-12 01:09:24,678 INFO :     bf_on_grp_sel: 0x12345678
+2023-06-12 01:09:24,679 INFO : 
+2023-06-12 01:09:24,694 INFO :   Checking if settings-file ".json" exists.
+2023-06-12 01:09:24,695 WARNING:     [1m[33mNo settings-file exist.
+2023-06-12 01:09:24,695 INFO :   Using normal setup.
+2023-06-12 01:09:24,700 INFO :   TX setup complete
+2023-06-12 01:09:24,714 INFO :   TX enabled

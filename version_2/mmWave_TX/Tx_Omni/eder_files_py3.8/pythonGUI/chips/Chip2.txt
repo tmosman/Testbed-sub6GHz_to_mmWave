@@ -1,0 +1,30 @@
+%This is a comment, only full line comments are available
+%Syntax är:
+%Gruppnamn\n 																							  
+%register name : [physical address, size, power-on/reset value] : Matrix of controls in register[[name of control, startBit (0, endBit]]\n
+%If a control only uses one bit, set both to that bit.
+%It is important that a register is declared on one line
+BIAS
+bias_ctrl:          [0x0020, 1, 0x00]:  [["Description", 0, 7]]
+bias_ctrl_rx:       [0x0025, 3, 0x00]:  [["Description", 0, 23]]
+bias_ctrl_tx:       [0x0029, 3, 0x00]:  [["Description", 0, 23]]
+bias_off_ctrl_rx:   [0x002D, 3, 0x00]:  [["Description", 0, 23]]
+bias_off_ctrl_tx:   [0x0031, 3, 0x00]:  [["Description", 0, 23]]
+bias_vco_x3:        [0x0034, 1, 0x00]:  [["Description", 0, 7]]
+bias_pll:           [0x0035, 1, 0x00]:  [["Description", 0, 7]]
+bias_lo:            [0x0036, 1, 0x00]:  [["Description", 0, 7]]
+bias_tx:            [0x0038, 2, 0x00]:  [["Description", 0, 15]]
+bias_rx:            [0x003a, 2, 0x00]:  [["Description", 0, 15]]
+#
+SYSTEM
+chip_id_sw_en:        [0x0004, 1, 0x00]: [["Description", 0, 7]]
+tx_rx_sw_ctrl:        [0x0005, 1, 0x00]: [["Description", 0, 7]]
+fast_clk_ctrl:        [0x0006, 1, 0x00]: [["Description", 0, 7]]
+gpio_tx_rx_sw_ctrl:   [0x0008, 1, 0x00]: [["Description", 0, 7]]
+gpio_agc_rst_ctrl:    [0x0009, 1, 0x00]: [["Description", 0, 7]]
+gpio_agc_start_ctrl:  [0x000a, 1, 0x00]: [["Description", 0, 7]]
+gpio_agc_done_ctrl:   [0x000b, 1, 0x02]: [["Description", 0, 7]]
+bist_amux_ctrl:       [0x000c, 1, 0x00]: [["Description", 0, 7]]
+bist_bgtest_ctrl:     [0x000d, 1, 0x00]: [["Description", 0, 7]]
+bist_ot_ctrl:         [0x000e, 1, 0x00]: [["Description", 0, 7]]
+bist_ot_temp:         [0x000f, 1, 0x80]: [["Description", 0, 7]]
