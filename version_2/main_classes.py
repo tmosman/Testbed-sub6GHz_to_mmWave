@@ -374,7 +374,7 @@ class Estimator:
         lts_indx = payload_indx-160;
         lts_indx = lts_indx+1
 
-        dataOutput = self.cfoEstimate(output, lts_indx,do_cfo = False)
+        dataOutput = self.cfoEstimate(output, lts_indx,do_cfo = True)
         ax = fig_list[0]
         ax1 = fig_list[1]
         ax2 = fig_list[2]
@@ -753,8 +753,8 @@ class pyUHD:
     
         while recv_samps < num_samps:
             samps = self.streamer.recv(recv_buffer, self.metadata)
-            if self.metadata.error_code != uhd.types.RXMetadataErrorCode.none:
-                print(self.metadata.strerror())
+            #if self.metadata.error_code != uhd.types.RXMetadataErrorCode.none:
+            #    print(self.metadata.strerror())
             if samps:
                 real_samps = min(num_samps - recv_samps, samps)
                 result[:, recv_samps:recv_samps + real_samps] = \

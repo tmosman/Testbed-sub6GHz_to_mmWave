@@ -1,11 +1,202 @@
-06/11/2023 11:29:02 PM : Publisher :  Done Searching
-2023-06-11 23:29:03,238 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 238.411 nano secs
-2023-06-11 23:29:03,358 : Subscriber0 : Done Captured IQ stream at 0
-2023-06-11 23:29:08,044 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 44.053 nano secs
-2023-06-11 23:29:08,160 : Subscriber0 : Done Captured IQ stream at 1
-2023-06-11 23:29:12,578 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 578.821 nano secs
-2023-06-11 23:29:12,694 : Subscriber0 : Done Captured IQ stream at 2
-2023-06-11 23:29:17,190 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 190.89 nano secs
-2023-06-11 23:29:17,307 : Subscriber0 : Done Captured IQ stream at 3
-2023-06-11 23:29:22,009 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 9.054 nano secs
-2023-06-11 23:29:22,126 : Subscriber0 : Done Captured IQ stream at 4
+2023-06-27 21:55:54,789 : Subscriber1 : **** New session started on Tue Jun 27 21:55:54 2023
+2023-06-27 21:55:54,790 : Subscriber1 : **** New session started on Tue Jun 27 21:55:54 2023
+2023-06-27 21:55:54,790 : Subscriber1 :   EVK SW Version  20220406_1715
+2023-06-27 21:55:55,303 : Subscriber1 :   [1mChip type Eder B MMF detected.
+2023-06-27 21:55:55,304 : Subscriber1 :   [1mchip_type: Eder B MMF
+2023-06-27 21:55:55,312 : Subscriber1 :   Reference frequency: 45.00 MHz
+2023-06-27 21:55:55,312 : Subscriber1 :   Chip REF already initialized.
+2023-06-27 21:55:55,327 : Subscriber1 :   Chip ADC init.
+2023-06-27 21:55:59,280 : Subscriber1 :   temp_calib_offset: -0.5
+2023-06-27 21:55:59,281 : Subscriber1 :   [1mrfm_type: BFM06010
+2023-06-27 21:55:59,351 : Subscriber1 :   Chip present (chip_id = 0x02741812).
+2023-06-27 21:55:59,370 : Subscriber1 :   Chip VCO already initialized.
+2023-06-27 21:55:59,370 : Subscriber1 :   Reference frequency: 45.00 MHz
+2023-06-27 21:55:59,371 : Subscriber1 :   Chip REF already initialized.
+2023-06-27 21:55:59,387 : Subscriber1 :   Chip ADC init.
+2023-06-27 21:55:59,388 : Subscriber1 :   Chip TEMP already initialized.
+2023-06-27 21:55:59,935 : Subscriber1 :   Chip PLL init
+2023-06-27 21:55:59,935 : Subscriber1 : Setting frequency to 62.64 GHz
+2023-06-27 21:55:59,959 : Subscriber1 : Temperature: 53.681 C
+2023-06-27 21:55:59,959 : Subscriber1 : vco_vtune_atc_lo_th: 0x96 (1.647 V)
+2023-06-27 21:55:59,961 : Subscriber1 : vco_tune_ctrl: 0x7
+2023-06-27 21:55:59,983 : Subscriber1 : vco_tune_status [0x7e]: 0x7e
+2023-06-27 21:55:59,983 : Subscriber1 : vco_tune_det_status[0] [1]: 0x3
+2023-06-27 21:55:59,983 : Subscriber1 : vco_tune_freq_cnt [0x7ff +/-11]: 0x801
+2023-06-27 21:55:59,985 : Subscriber1 : vco_tune_dig_tune: 0x45
+2023-06-27 21:55:59,987 : Subscriber1 : vco_tune_ibias: 0x1d
+2023-06-27 21:55:59,989 : Subscriber1 : VCO tune OK.
+2023-06-27 21:56:00,025 : Subscriber1 : Vtune = 1.504313725490196 V
+2023-06-27 21:56:00,025 : Subscriber1 : PLL Set time = 0.08892345428466797 seconds.
+2023-06-27 21:56:00,026 : Subscriber1 : 
+2023-06-27 21:56:00,026 : Subscriber1 :   Softswitch settings
+2023-06-27 21:56:00,026 : Subscriber1 :     State:                    0     1     2     3     4     5     6     7 
+2023-06-27 21:56:00,026 : Subscriber1 :     trx_soft_rx_on_enables:  0x14  0x14  0x14  0x14  0x1E  0x1E  0x1E  0x1E
+2023-06-27 21:56:00,027 : Subscriber1 :     trx_soft_tx_on_enables:  0x06  0x06  0x16  0x16  0x16  0x1E  0x1E  0x1E
+2023-06-27 21:56:00,027 : Subscriber1 :     max_state: 7
+2023-06-27 21:56:00,029 : Subscriber1 :     delay: 0.015us   2 cycles
+2023-06-27 21:56:00,029 : Subscriber1 :     bf_on_grp_sel: 0x12345678
+2023-06-27 21:56:00,029 : Subscriber1 : 
+2023-06-27 21:56:01,050 : Subscriber1 :   Loading beambook
+2023-06-27 21:56:01,050 : Subscriber1 : Compatible beambook found
+2023-06-27 21:56:01,051 : Subscriber1 : Selected beambook for frequency 62640 MHz
+2023-06-27 21:56:16,214 : Subscriber1 :   Temperature stabilized
+2023-06-27 21:56:16,214 : Subscriber1 : Rx DRV DCO calibration
+2023-06-27 21:56:16,214 : Subscriber1 : Rx DRV DCO status before calibration start:
+2023-06-27 21:56:16,380 : Subscriber1 :   rx_drv_i_dco  : 0x002 (0x0,0x02)
+2023-06-27 21:56:16,380 : Subscriber1 :   rx_drv_q_dco  : 0x008 (0x0,0x08)
+2023-06-27 21:56:16,381 : Subscriber1 :   V_i_diff      : 0.31 mV
+2023-06-27 21:56:16,381 : Subscriber1 :   V_q_diff      : -0.00 mV
+2023-06-27 21:56:16,381 : Subscriber1 :   V_i_com       : 0.607 V
+2023-06-27 21:56:16,381 : Subscriber1 :   V_q_com       : 0.621 V
+2023-06-27 21:56:16,413 : Subscriber1 : Change Control settings:
+2023-06-27 21:56:16,415 : Subscriber1 :   trx_ctrl      : 0x01     => 0x00
+2023-06-27 21:56:16,417 : Subscriber1 :   rx_dco_en     : 0x01     => 0x01
+2023-06-27 21:56:16,419 : Subscriber1 :   trx_rx_on     : 0x1fffff => 0x1e0000
+2023-06-27 21:56:16,421 : Subscriber1 :   trx_rx_off    : 0x000000 => 0x1e0000
+2023-06-27 21:56:16,423 : Subscriber1 :   rx_bb_i_dco   : 0x101b    => 0x040
+2023-06-27 21:56:16,425 : Subscriber1 :   rx_bb_q_dco   : 0x021    => 0x040
+2023-06-27 21:56:16,425 : Subscriber1 : Rx DRV DCO status after control register change:
+2023-06-27 21:56:16,589 : Subscriber1 :   rx_drv_i_dco  : 0x002 (0x0,0x02)
+2023-06-27 21:56:16,590 : Subscriber1 :   rx_drv_q_dco  : 0x008 (0x0,0x08)
+2023-06-27 21:56:16,590 : Subscriber1 :   V_i_diff      : 1.25 mV
+2023-06-27 21:56:16,590 : Subscriber1 :   V_q_diff      : -9.66 mV
+2023-06-27 21:56:16,590 : Subscriber1 :   V_i_com       : 0.608 V
+2023-06-27 21:56:16,591 : Subscriber1 :   V_q_com       : 0.621 V
+2023-06-27 21:56:16,604 : Subscriber1 : Change Rx Gain settings:
+2023-06-27 21:56:16,606 : Subscriber1 :   Rx BFRF gain  : 0x66 => 0x00
+2023-06-27 21:56:16,608 : Subscriber1 :   Rx BB1 gain   : 0x77 => 0x11
+2023-06-27 21:56:16,609 : Subscriber1 :   Rx BB2 gain   : 0x11 => 0x11
+2023-06-27 21:56:16,612 : Subscriber1 :   Rx BB3 gain   : 0x77 => 0x77
+2023-06-27 21:56:16,614 : Subscriber1 :   Rx LNA enable : 0x00 => 0x00
+2023-06-27 21:56:16,614 : Subscriber1 : Rx DRV DCO status after Rx gain change:
+2023-06-27 21:56:16,778 : Subscriber1 :   rx_drv_i_dco  : 0x002 (0x0,0x02)
+2023-06-27 21:56:16,778 : Subscriber1 :   rx_drv_q_dco  : 0x008 (0x0,0x08)
+2023-06-27 21:56:16,778 : Subscriber1 :   V_i_diff      : -1.25 mV
+2023-06-27 21:56:16,779 : Subscriber1 :   V_q_diff      : 1.56 mV
+2023-06-27 21:56:16,779 : Subscriber1 :   V_i_com       : 0.607 V
+2023-06-27 21:56:16,779 : Subscriber1 :   V_q_com       : 0.621 V
+2023-06-27 21:56:16,779 : Subscriber1 : Rx DRV DCO status before calibration:
+2023-06-27 21:56:16,946 : Subscriber1 :   rx_drv_i_dco  : 0x002 (0x0,0x02)
+2023-06-27 21:56:16,946 : Subscriber1 :   rx_drv_q_dco  : 0x008 (0x0,0x08)
+2023-06-27 21:56:16,947 : Subscriber1 :   V_i_diff      : -1.56 mV
+2023-06-27 21:56:16,947 : Subscriber1 :   V_q_diff      : 2.18 mV
+2023-06-27 21:56:16,947 : Subscriber1 :   V_i_com       : 0.607 V
+2023-06-27 21:56:16,948 : Subscriber1 :   V_q_com       : 0.621 V
+2023-06-27 21:56:19,907 : Subscriber1 : Rx DRV DCO status after calibration:
+2023-06-27 21:56:20,071 : Subscriber1 :   rx_drv_i_dco  : 0x002 (0x0,0x02)
+2023-06-27 21:56:20,072 : Subscriber1 :   rx_drv_q_dco  : 0x008 (0x0,0x08)
+2023-06-27 21:56:20,072 : Subscriber1 :   V_i_diff      : -1.25 mV
+2023-06-27 21:56:20,072 : Subscriber1 :   V_q_diff      : 1.87 mV
+2023-06-27 21:56:20,073 : Subscriber1 :   V_i_com       : 0.607 V
+2023-06-27 21:56:20,073 : Subscriber1 :   V_q_com       : 0.620 V
+2023-06-27 21:56:20,073 : Subscriber1 : Restoring Rx Gain settings:
+2023-06-27 21:56:20,075 : Subscriber1 :   Rx BFRF gain  : 0x00 => 0x66
+2023-06-27 21:56:20,077 : Subscriber1 :   Rx BB1 gain   : 0x11 => 0x77
+2023-06-27 21:56:20,079 : Subscriber1 :   Rx BB2 gain   : 0x11 => 0x11
+2023-06-27 21:56:20,081 : Subscriber1 :   Rx BB3 gain   : 0x77 => 0x77
+2023-06-27 21:56:20,083 : Subscriber1 :   Rx LNA enable : 0x00 => 0x00
+2023-06-27 21:56:20,093 : Subscriber1 : Restoring control settings:
+2023-06-27 21:56:20,095 : Subscriber1 :   trx_ctrl      : 0x00     => 0x01
+2023-06-27 21:56:20,097 : Subscriber1 :   rx_dco_en     : 0x01     => 0x01
+2023-06-27 21:56:20,099 : Subscriber1 :   trx_rx_on     : 0x1e0000 => 0x1fffff
+2023-06-27 21:56:20,101 : Subscriber1 :   trx_rx_off    : 0x1e0000 => 0x000000
+2023-06-27 21:56:20,103 : Subscriber1 :   rx_bb_i_dco   : 0x040    => 0x101b
+2023-06-27 21:56:20,105 : Subscriber1 :   rx_bb_q_dco   : 0x040    => 0x021
+2023-06-27 21:56:20,117 : Subscriber1 : Rx DRV DCO status after register restore:
+2023-06-27 21:56:20,282 : Subscriber1 :   rx_drv_i_dco  : 0x002 (0x0,0x02)
+2023-06-27 21:56:20,282 : Subscriber1 :   rx_drv_q_dco  : 0x008 (0x0,0x08)
+2023-06-27 21:56:20,282 : Subscriber1 :   V_i_diff      : 1.25 mV
+2023-06-27 21:56:20,283 : Subscriber1 :   V_q_diff      : -0.00 mV
+2023-06-27 21:56:20,283 : Subscriber1 :   V_i_com       : 0.606 V
+2023-06-27 21:56:20,283 : Subscriber1 :   V_q_com       : 0.620 V
+2023-06-27 21:56:20,283 : Subscriber1 : Rx DRV DCO calibration done
+2023-06-27 21:56:20,284 : Subscriber1 : Rx BB DCO calibration
+2023-06-27 21:56:20,284 : Subscriber1 : Rx BB DCO status before calibration start:
+2023-06-27 21:56:20,452 : Subscriber1 :   rx_bb_i_dco   : 0x101b (0x1,0x0,0x1b)
+2023-06-27 21:56:20,452 : Subscriber1 :   rx_bb_q_dco   : 0x021 (0x0,0x0,0x21)
+2023-06-27 21:56:20,453 : Subscriber1 :   V_i_diff      : 0.62 mV
+2023-06-27 21:56:20,453 : Subscriber1 :   V_q_diff      : -0.00 mV
+2023-06-27 21:56:20,453 : Subscriber1 :   V_i_com       : 0.607 V
+2023-06-27 21:56:20,454 : Subscriber1 :   V_q_com       : 0.621 V
+2023-06-27 21:56:20,477 : Subscriber1 : Change Control settings:
+2023-06-27 21:56:20,479 : Subscriber1 :   trx_ctrl      : 0x01     => 0x01
+2023-06-27 21:56:20,481 : Subscriber1 :   rx_dco_en     : 0x01     => 0x01
+2023-06-27 21:56:20,483 : Subscriber1 :   trx_rx_on     : 0x1fffff => 0x1fffff
+2023-06-27 21:56:20,485 : Subscriber1 :   trx_rx_off    : 0x000000 => 0x000000
+2023-06-27 21:56:20,485 : Subscriber1 : Rx BB DCO status after control register change:
+2023-06-27 21:56:20,653 : Subscriber1 :   rx_bb_i_dco   : 0x101b (0x1,0x0,0x1b)
+2023-06-27 21:56:20,653 : Subscriber1 :   rx_bb_q_dco   : 0x021 (0x0,0x0,0x21)
+2023-06-27 21:56:20,653 : Subscriber1 :   V_i_diff      : 0.62 mV
+2023-06-27 21:56:20,654 : Subscriber1 :   V_q_diff      : -0.00 mV
+2023-06-27 21:56:20,654 : Subscriber1 :   V_i_com       : 0.607 V
+2023-06-27 21:56:20,654 : Subscriber1 :   V_q_com       : 0.621 V
+2023-06-27 21:56:20,663 : Subscriber1 : Change Rx Gain settings:
+2023-06-27 21:56:20,665 : Subscriber1 :   Rx BFRF gain  : 0x66 => 0x66
+2023-06-27 21:56:20,667 : Subscriber1 :   Rx BB1 gain   : 0x77 => 0x77
+2023-06-27 21:56:20,669 : Subscriber1 :   Rx BB2 gain   : 0x11 => 0x11
+2023-06-27 21:56:20,671 : Subscriber1 :   Rx BB3 gain   : 0x77 => 0x77
+2023-06-27 21:56:20,673 : Subscriber1 :   Rx LNA enable : 0x00 => 0x00
+2023-06-27 21:56:20,674 : Subscriber1 : Rx BB DCO status after Rx gain change:
+2023-06-27 21:56:20,841 : Subscriber1 :   rx_bb_i_dco   : 0x101b (0x1,0x0,0x1b)
+2023-06-27 21:56:20,842 : Subscriber1 :   rx_bb_q_dco   : 0x021 (0x0,0x0,0x21)
+2023-06-27 21:56:20,842 : Subscriber1 :   V_i_diff      : 0.62 mV
+2023-06-27 21:56:20,842 : Subscriber1 :   V_q_diff      : -0.31 mV
+2023-06-27 21:56:20,842 : Subscriber1 :   V_i_com       : 0.607 V
+2023-06-27 21:56:20,843 : Subscriber1 :   V_q_com       : 0.621 V
+2023-06-27 21:56:20,853 : Subscriber1 : Change Rx beam:
+2023-06-27 21:56:20,855 : Subscriber1 :   Rx beam       : 0x3f => 0x3f
+2023-06-27 21:56:20,855 : Subscriber1 : Rx BB DCO status after Rx beam change:
+2023-06-27 21:56:21,024 : Subscriber1 :   rx_bb_i_dco   : 0x101b (0x1,0x0,0x1b)
+2023-06-27 21:56:21,024 : Subscriber1 :   rx_bb_q_dco   : 0x021 (0x0,0x0,0x21)
+2023-06-27 21:56:21,025 : Subscriber1 :   V_i_diff      : 0.94 mV
+2023-06-27 21:56:21,025 : Subscriber1 :   V_q_diff      : -0.31 mV
+2023-06-27 21:56:21,026 : Subscriber1 :   V_i_com       : 0.607 V
+2023-06-27 21:56:21,026 : Subscriber1 :   V_q_com       : 0.621 V
+2023-06-27 21:56:21,028 : Subscriber1 : Rx BB DCO status before calibration:
+2023-06-27 21:56:21,197 : Subscriber1 :   rx_bb_i_dco   : 0x101b (0x1,0x0,0x1b)
+2023-06-27 21:56:21,198 : Subscriber1 :   rx_bb_q_dco   : 0x021 (0x0,0x0,0x21)
+2023-06-27 21:56:21,198 : Subscriber1 :   V_i_diff      : 0.94 mV
+2023-06-27 21:56:21,199 : Subscriber1 :   V_q_diff      : -0.31 mV
+2023-06-27 21:56:21,199 : Subscriber1 :   V_i_com       : 0.607 V
+2023-06-27 21:56:21,199 : Subscriber1 :   V_q_com       : 0.622 V
+2023-06-27 21:56:25,741 : Subscriber1 : Rx BB DCO status after calibration:
+2023-06-27 21:56:25,909 : Subscriber1 :   rx_bb_i_dco   : 0x101b (0x1,0x0,0x1b)
+2023-06-27 21:56:25,910 : Subscriber1 :   rx_bb_q_dco   : 0x021 (0x0,0x0,0x21)
+2023-06-27 21:56:25,910 : Subscriber1 :   V_i_diff      : 0.62 mV
+2023-06-27 21:56:25,910 : Subscriber1 :   V_q_diff      : -0.00 mV
+2023-06-27 21:56:25,911 : Subscriber1 :   V_i_com       : 0.607 V
+2023-06-27 21:56:25,911 : Subscriber1 :   V_q_com       : 0.621 V
+2023-06-27 21:56:25,913 : Subscriber1 : Restore Rx beam:
+2023-06-27 21:56:25,915 : Subscriber1 :   Rx beam       : 0x3f => 0x3f
+2023-06-27 21:56:25,923 : Subscriber1 : Restoring Rx Gain settings:
+2023-06-27 21:56:25,925 : Subscriber1 :   Rx BFRF gain  : 0x66 => 0x66
+2023-06-27 21:56:25,927 : Subscriber1 :   Rx BB1 gain   : 0x77 => 0x77
+2023-06-27 21:56:25,929 : Subscriber1 :   Rx BB2 gain   : 0x11 => 0x11
+2023-06-27 21:56:25,931 : Subscriber1 :   Rx BB3 gain   : 0x77 => 0x77
+2023-06-27 21:56:25,933 : Subscriber1 :   Rx LNA enable : 0x00 => 0x00
+2023-06-27 21:56:25,943 : Subscriber1 : Restoring control settings:
+2023-06-27 21:56:25,945 : Subscriber1 :   trx_ctrl      : 0x01     => 0x01
+2023-06-27 21:56:25,947 : Subscriber1 :   trx_rx_on     : 0x1fffff => 0x1fffff
+2023-06-27 21:56:25,950 : Subscriber1 :   trx_rx_off    : 0x000000 => 0x000000
+2023-06-27 21:56:25,955 : Subscriber1 : Rx BB DCO status after register restore:
+2023-06-27 21:56:26,123 : Subscriber1 :   rx_bb_i_dco   : 0x101b (0x1,0x0,0x1b)
+2023-06-27 21:56:26,124 : Subscriber1 :   rx_bb_q_dco   : 0x021 (0x0,0x0,0x21)
+2023-06-27 21:56:26,124 : Subscriber1 :   V_i_diff      : 0.31 mV
+2023-06-27 21:56:26,124 : Subscriber1 :   V_q_diff      : -0.31 mV
+2023-06-27 21:56:26,125 : Subscriber1 :   V_i_com       : 0.607 V
+2023-06-27 21:56:26,125 : Subscriber1 :   V_q_com       : 0.621 V
+2023-06-27 21:56:26,127 : Subscriber1 : Rx BB DCO calibration done
+2023-06-27 21:56:26,128 : Subscriber1 :   RX Setup completed
+2023-06-27 21:56:26,149 : Subscriber1 :   RX enabled
+06/27/2023 09:56:27 PM : Publisher :  Done Searching
+2023-06-27 21:56:28,331 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 331.109 nano secs
+2023-06-27 21:56:28,457 : Subscriber0 : Done Captured IQ stream at 0
+2023-06-27 21:56:35,962 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 962.548 nano secs
+2023-06-27 21:56:36,086 : Subscriber0 : Done Captured IQ stream at 1
+2023-06-27 21:56:41,763 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 763.571 nano secs
+2023-06-27 21:56:41,910 : Subscriber0 : Done Captured IQ stream at 2
+2023-06-27 21:57:03,761 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 760.695 nano secs
+2023-06-27 21:57:03,918 : Subscriber0 : Done Captured IQ stream at 3
+2023-06-27 21:57:15,363 : Subscriber0 : ['31A52D0', '31A52D7'] capture at: 363.262 nano secs
+2023-06-27 21:57:15,483 : Subscriber0 : Done Captured IQ stream at 4
+2023-06-27 21:57:19,040 : Subscriber1 : Done mmWave Capturing

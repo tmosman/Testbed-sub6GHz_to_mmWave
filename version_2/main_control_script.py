@@ -23,7 +23,7 @@ if __name__ == "__main__":
     ## load config file
     selectAPI = True  ## True --> gnuradio, else: uhd
     if selectAPI:
-        config.read('./config/gnuradio_config.ini')   
+        config.read('./config/gnuradio_config_mmW.ini')   
     else:
         config.read('./config/uhd_config.ini')
  

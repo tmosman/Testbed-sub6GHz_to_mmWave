@@ -196,7 +196,7 @@ def publisher_zmq(capture_config):
     ## create zmq object for the publisher process 
     zmq_obj = createZMQ(local_ip)
     if ast.literal_eval(capture_config['robot']) == 'yes':
-        robot_client = Robot_Interface('127.0.0.1', 9999) # connect to the robot server script
+        robot_client = Robot_Interface('192.168.1.150', 9999) # connect to the robot server script
         robotServer = True
     else:
         robotServer = False
@@ -240,7 +240,10 @@ def publisher_zmq(capture_config):
 
         # Send command to Robot
         if robotServer == True:
-            robot_client.send('Hello')
+            #robot_client.send('Hello')
+            mgs = f"MOVE+{count}"
+            robot_client.send(mgs)
+            time.sleep(2)
 
         print('send both')
         
