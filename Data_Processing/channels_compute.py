@@ -23,7 +23,7 @@ class Estimator:
         if numberSubCarriers == 64:
             self.subcarriersIndex_64(numberSubCarriers)
         self.lts_time,self.all_preamble = self.preamble()
-        self.LTS_CORR_THRESH = 0.75
+        self.LTS_CORR_THRESH = 0.95
         self.FFT_OFFSET = 4
         pass
     
@@ -198,7 +198,7 @@ class Estimator:
         rx_lts = dataSamples[0,lts_index : lts_index+160]
         rx_lts1 = rx_lts[-64+-self.FFT_OFFSET + 96:-64+-self.FFT_OFFSET +160];  # Check indexing
         rx_lts2 = rx_lts[-self.FFT_OFFSET+96:-self.FFT_OFFSET+160]
-        print(rx_lts1.shape,self.N_SC)
+        #print(rx_lts1.shape,self.N_SC)
         if rx_lts1.shape[0] and rx_lts2.shape[0] == self.N_SC:
             rx_lts1_f, rx_lts2_f = np.fft.fft(rx_lts1), np.fft.fft(rx_lts2)
             # Calculate channel estimate from average of 2 training symbols
@@ -346,11 +346,11 @@ class Estimator:
         bit_errs = np.sum((tx_data^receivedData) != 0)
         rx_evm  = np.sqrt(np.sum((np.real(receivedSymbols) - np.real(tx_syms))**2 \
                                      + (np.imag(receivedSymbols) - np.imag(tx_syms))**2)/(len(self.SC_IND_DATA) * self.N_OFDM_SYMS));
-        print('\nResults:\n');
-        print(f'Num Bytes:  {self.N_DATA_SYMS * np.log2(self.MOD_ORDER) / 8 }\n' );
+        # print('\nResults:\n');
+        # print(f'Num Bytes:  {self.N_DATA_SYMS * np.log2(self.MOD_ORDER) / 8 }\n' );
         #print(f'Sym Errors:  {sym_errs} (of { self.N_DATA_SYMS} total symbols)\n');
-        print(f'Bit Errors:  {bit_errs} (of {self.N_DATA_SYMS * np.log2(self.MOD_ORDER)} total bits) {bit_errs/(self.N_DATA_SYMS * np.log2(self.MOD_ORDER))}\n')
-        print(f'The Receiver EVM is : {(rx_evm)*100}%')
+        #print(f'Bit Errors:  {bit_errs} (of {self.N_DATA_SYMS * np.log2(self.MOD_ORDER)} total bits) {bit_errs/(self.N_DATA_SYMS * np.log2(self.MOD_ORDER))}\n')
+        #print(f'The Receiver EVM is : {(rx_evm)*100}%')
         bit_errs = bit_errs/(self.N_DATA_SYMS * np.log2(self.MOD_ORDER))
         return bit_errs,tx_syms
     
@@ -509,7 +509,7 @@ class Estimator:
                 payload_ind = valid_peak_indices[select_peak]
                 lts_ind = payload_ind-160;
                 lts_ind = lts_ind+1
-                print(f'Decoding Packet {select_peak}, starting at index {payload_ind}')
+                #print(f'Decoding Packet {select_peak}, starting at index {payload_ind}')
                 
                 Hest = self.complexChannelGain(dataOutput,lts_ind)
                 #Hest = np.ones((1,64),np.complex64)
@@ -538,7 +538,7 @@ class Estimator:
                 
             plt.cla()
             '''
-        return Hest,Hest0
+        return Hest,Hest0,ber
 
 
 if __name__ == "__main__":
