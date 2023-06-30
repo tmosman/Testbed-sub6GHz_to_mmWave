@@ -31,35 +31,52 @@ if __name__ == "__main__":
     num_conns =  int(capture_config['num_conns'])
     
     ## create directory for IQ logging
+    '''
     save_dir = ast.literal_eval(capture_config['save_dir'])
     if not os.path.exists(save_dir):
         os.mkdir(save_dir)
-     
+    if not os.path.exists(save_dir+'/usrp1'):
+        os.mkdir(save_dir+'/usrp1')
+    if not os.path.exists(save_dir+'/usrp2'):
+        os.mkdir(save_dir+'/usrp2')
+        '''
+    
  
     ## Start Processes !!!
     message = input(" -> ")  # take input
     processes = []
     queue = Queue()
-    while message.lower().strip() != 'bye':        
-        ## Start Publisher Process
-        p_pub = Process(name='Publisher',target=publisher_zmq, args=(capture_config,))
-        p_pub.start() 
-        time.sleep(1)
-        print('Publisher Script Started !!')
-        
-        
-        for i in range(num_conns):
-            usrp_configData = config[f'Device{i}']
-            p = Process(name=f'Subscriber{i}',target=subscriber_zmq, args=(usrp_configData,capture_config,queue,))
-            p.start()
-            print(queue.get())
-            processes.append(p)
-            print('Subcriber !!!')
+    while message.lower().strip() != 'bye':
+        for loc in range(1):
+            save_dir = ast.literal_eval(capture_config['save_dir'])+f'{loc}'
+            if not os.path.exists(save_dir):
+                os.mkdir(save_dir)
+            '''
+            if not os.path.exists(save_dir+'/usrp1'):
+                os.mkdir(save_dir+'/usrp1')
+            if not os.path.exists(save_dir+'/usrp2'):
+                os.mkdir(save_dir+'/usrp2')  
+            '''
+                 
+            ## Start Publisher Process
+            p_pub = Process(name='Publisher',target=publisher_zmq, args=(capture_config,save_dir,))
+            p_pub.start() 
+            time.sleep(1)
+            print('Publisher Script Started !!')
+            
+            
+            for i in range(num_conns):
+                usrp_configData = config[f'Device{i}']
+                p = Process(name=f'Subscriber{i}',target=subscriber_zmq, args=(usrp_configData,capture_config,queue,save_dir,))
+                p.start()
+                print(queue.get())
+                processes.append(p)
+                print('Subcriber !!!')
 
-        for p in processes:
-            print(queue.get())
-            p.join()
-        p_pub.join()
-        print('Processes Closed !!')
-        message = input(" -> ")  # take input
-    
+            for p in processes:
+                print(queue.get())
+                p.join()
+            p_pub.join()
+            print('Processes Closed !!')
+            message = input(" -> ")  # take input
+        

@@ -30,7 +30,7 @@ class Estimator:
         if numberSubCarriers == 64:
             self.subcarriersIndex_64(numberSubCarriers)
         self.lts_time,self.all_preamble = self.preamble()
-        self.LTS_CORR_THRESH = 0.95
+        self.LTS_CORR_THRESH = 0.8
         self.FFT_OFFSET = 4
         pass
     
@@ -103,7 +103,7 @@ class Estimator:
             lts_ind = lts_ind+1
             print('Number of Packets Detected: ',len(valid_peak_indices),
                   f' at {payload_ind}')
-            print(lts_peaks[lts_second_peak_index].flatten())
+            #print(lts_peaks[lts_second_peak_index].flatten())
         else:
             payload_ind,lts_ind = 0,0
             print('No Packet Detected !!!')
@@ -168,7 +168,7 @@ class Estimator:
         rx_lts = dataSamples[0,lts_index : lts_index+160]
         rx_lts1 = rx_lts[-64+-self.FFT_OFFSET + 96:-64+-self.FFT_OFFSET +160];  # Check indexing
         rx_lts2 = rx_lts[-self.FFT_OFFSET+96:-self.FFT_OFFSET+160]
-        print(rx_lts1.shape,self.N_SC)
+        #print(rx_lts1.shape,self.N_SC)
         if rx_lts1.shape[0] and rx_lts2.shape[0] == self.N_SC:
             rx_lts1_f, rx_lts2_f = np.fft.fft(rx_lts1), np.fft.fft(rx_lts2)
             # Calculate channel estimate from average of 2 training symbols
@@ -316,11 +316,11 @@ class Estimator:
         bit_errs = np.sum((tx_data^receivedData) != 0)
         rx_evm  = np.sqrt(np.sum((np.real(receivedSymbols) - np.real(tx_syms))**2 \
                                      + (np.imag(receivedSymbols) - np.imag(tx_syms))**2)/(len(self.SC_IND_DATA) * self.N_OFDM_SYMS));
-        print('\nResults:\n');
-        print(f'Num Bytes:  {self.N_DATA_SYMS * np.log2(self.MOD_ORDER) / 8 }\n' );
+        #print('\nResults:\n');
+        #print(f'Num Bytes:  {self.N_DATA_SYMS * np.log2(self.MOD_ORDER) / 8 }\n' );
         #print(f'Sym Errors:  {sym_errs} (of { self.N_DATA_SYMS} total symbols)\n');
         print(f'Bit Errors:  {bit_errs} (of {self.N_DATA_SYMS * np.log2(self.MOD_ORDER)} total bits) {bit_errs/(self.N_DATA_SYMS * np.log2(self.MOD_ORDER))}\n')
-        print(f'The Receiver EVM is : {(rx_evm)*100}%')
+        #print(f'The Receiver EVM is : {(rx_evm)*100}%')
         bit_errs = bit_errs/(self.N_DATA_SYMS * np.log2(self.MOD_ORDER))
         return bit_errs,tx_syms
     
@@ -350,7 +350,7 @@ class Estimator:
         
         # Appy Phase Error correction
         phase_error = self.phase_correction(equalizeSymbols)
-        print(np.mean(sfo_syms,axis=1).shape,Hest.shape,phase_error.shape)
+        #print(np.mean(sfo_syms,axis=1).shape,Hest.shape,phase_error.shape)
         
         # Apply SFO + PE to the channel estimate, to correct residual offsets
         Hest = Hest_sfo* np.exp(-1j * np.mean(phase_error) )
@@ -365,7 +365,7 @@ class Estimator:
         
         return receivedSymbols,tx_syms,ber,Hest
 
-    def Rx_processing(self,rx_samples,fig_list,rf_ch,count1,usrp_no):
+    def Rx_processing(self,rx_samples,fig_list,rf_ch,count1,usrp_no,pwr_vec):
         output = self.decimate2x(rx_samples,0)
         #output = self.decimate2x(output)
         autocorr,no_of_peak,valid_peak_indices = self.detectPeaks(output)
@@ -374,16 +374,18 @@ class Estimator:
         lts_indx = payload_indx-160;
         lts_indx = lts_indx+1
 
-        dataOutput = self.cfoEstimate(output, lts_indx,do_cfo = True)
+        dataOutput = self.cfoEstimate(output, lts_indx,do_cfo = False)
         ax = fig_list[0]
         ax1 = fig_list[1]
         ax2 = fig_list[2]
         ax3 = fig_list[3]
         
+
         if no_of_peak >= 2:
             plt.title(f'RF chain :{rf_ch}')
             #for select_peak in range(no_of_peak-1): 
-            for select_peak in range(2,3): 
+            for qq in range(1):
+                select_peak = no_of_peak -3 
                 payload_ind = valid_peak_indices[select_peak]
                 lts_ind = payload_ind-160;
                 lts_ind = lts_ind+1
@@ -421,9 +423,10 @@ class Estimator:
                     pdp = 10.0 * np.log10(np.fft.ifft(Hest[0],64))
                     tap = np.argmax(pdp)
                     print('channel:', Hest.shape)
-                    ax1.set_title(f'Power Delay Profile at tap {tap}, RF :{rf_ch}')
-                    #ax1.plot(np.arange(0,64),pdp)
-                    ax1.plot(np.abs(dataOutput[0][payload_ind:payload_ind+80]))
+                    #ax1.set_title(f'Time-domain OFDM symbol at RF :{rf_ch}')
+                    ax1.set_title(f'mmWave Power Vector, Beam {np.argmax(pwr_vec)+1}')
+                    ax1.plot(np.arange(1,64),pwr_vec.reshape(-1,)/np.max(pwr_vec),color='b',linewidth=1,alpha =0.5)
+                    #ax1.plot(np.abs(dataOutput[0][payload_ind:payload_ind+80]))
 
                 # ax1.plot(np.unwrap(np.angle(Hest[0]))-np.unwrap(np.angle(Hest0[0])))
                     
@@ -447,7 +450,7 @@ class Estimator:
                     
                     #ax1.set_xlabel('Sub-carriers')
                     #ax1.set_ylabel('Abs. Channel Response')
-                    plt.pause(0.1)
+                    plt.pause(1)
                 #Hest0 = self.complexChannelGain(dataOutput,lts_indx)  
             
         else:
